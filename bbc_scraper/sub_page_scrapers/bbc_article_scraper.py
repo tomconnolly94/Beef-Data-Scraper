@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def scrape_article(path, uReq, soup, keyword_list):
     sub_page_html = uReq(path).read()
     sub_page_soup = soup(sub_page_html, "html.parser")
