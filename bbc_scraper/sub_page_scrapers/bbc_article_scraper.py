@@ -4,7 +4,7 @@ def scrape_article(path, uReq, soup, keyword_list):
     sub_page_html = uReq(path).read()
     sub_page_soup = soup(sub_page_html, "html.parser")
 
-    sub_page_raw_html = sub_page_soup.findAll("div", {"class" : "story-body__inner"})
+    sub_page_raw_html = sub_page_soup.findAll("div", {"class" : "1-container"})
 
     #print(sub_page_raw_html)
     

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from bbc_scraper.sub_page_scrapers.bbc_article_scraper import scrape_article # import article scraper
+import globals
 
 def scrape_bbc_home(uReq, soup, keyword_list):
     
@@ -33,8 +34,10 @@ def scrape_bbc_home(uReq, soup, keyword_list):
 
                         scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
 
+                    else:
+                        print(globals.err_prefix + "element has no anchor tag")
     else:
-            print("tag not found");
+            print(globals.err_prefix + "tag not found")
 
     #dispose
     uClient.close()
