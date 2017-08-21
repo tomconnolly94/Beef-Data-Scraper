@@ -6,37 +6,41 @@ def scrape_cnn_home(uReq, soup, keyword_list):
     base_url = 'http://edition.cnn.com/' #url to scrape
 
     uClient = uReq(base_url)#make request for page
-    page_html = uClient.read() #extract html data from request object
+    raw_page_html = uClient.read() #extract html data from request object
 
-    page_soup = soup(page_html, "html.parser") #convert the html to a soup object
-    raw_html = page_soup.findAll("h3", {"class" : "cn__listitem"}) #find tags in the soup object
+    page_soup = soup(raw_page_html, "html.parser") #convert the html to a soup object
+    tag_array = page_soup.findAll("article", {"class" : "cd--article"}) #find tags in the soup object
 
-    print(len(raw_html))
-    print(len(page_html))
-    print(raw_html)
+    print(len(tag_array))
+    print(len(raw_page_html))
+    print(raw_page_html)
+    print(tag_array)
     
     
-    if len(raw_html) > 0: #only execute if tags have been found
+    if len(tag_array) > 0: #only execute if tags have been found
 
-            for x in range(0, len(raw_html)): #for each tag
+            for x in range(0, len(tag_array)): #for each tag
                                                                                                
                     print(x) #print index for reference
                     print(" ") #print seperator
 
-                    if(raw_html[x].a): #ensure the element has an anchor tag
+                    if(tag_array[x].a): #ensure the element has an anchor tag
 
-                        if("http://" in raw_html[x].a["href"]): #check if the a href is an absolute url or an absolute path
-                            sub_page_url = raw_html[x].a["href"]
+                        if("http://" in tag_array[x].a["href"]): #check if the a href is an absolute url or an absolute path
+                            sub_page_url = tag_array[x].a["href"]
 
                         else:
-                            sub_page_url = base_url + raw_html[x].a["href"]
+                            sub_page_url = base_url + tag_array[x].a["href"]
 
                         print(sub_page_url)
 
                         scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
 
+                    else:
+                        print(err_prefix + "element does not have an anchor tag");
+    
     else:
-            print("tag not found");
+            print(err_prefix + "Error: tag not found");
     
 
     #dispose

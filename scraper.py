@@ -7,5 +7,8 @@ from cnn_scraper.cnn_home import scrape_cnn_home # import bbc home scraper
 
 keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications")
 
+global err_prefix
+err_prefix = "Error: "
+
 #scrape_bbc_home(uReq, soup, keyword_list)
 scrape_cnn_home(uReq, soup, keyword_list)
