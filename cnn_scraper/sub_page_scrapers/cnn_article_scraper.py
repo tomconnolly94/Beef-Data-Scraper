@@ -27,3 +27,5 @@ def scrape_article(path, uReq, soup, keyword_list):
                 
             print(return_string)
             #do something with string
+    else:
+        print(globals.err_prefix + "cnn sub page scraper cannot find tags")
