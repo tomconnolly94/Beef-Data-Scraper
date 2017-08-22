@@ -17,25 +17,27 @@ def scrape_bbc_home(uReq, soup, keyword_list):
 
     if len(raw_html) > 0: #only execute if tags have been found
 
-            for x in range(0, len(raw_html)): #for each tag
+        beef_objects = []
+        
+        for x in range(0, len(raw_html)): #for each tag
 
-                    print(x) #print index for reference
-                    print(" ") #print seperator
+                print(x) #print index for reference
+                print(" ") #print seperator
 
-                    if(raw_html[x].a): #ensure the element has an anchor tag
+                if(raw_html[x].a): #ensure the element has an anchor tag
 
-                        if("http://" in raw_html[x].a["href"]): #check if the a href is an absolute url or an absolute path
-                            sub_page_url = raw_html[x].a["href"]
-
-                        else:
-                            sub_page_url = base_url + raw_html[x].a["href"]
-
-                        print(sub_page_url)
-
-                        scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+                    if("http://" in raw_html[x].a["href"]): #check if the a href is an absolute url or an absolute path
+                        sub_page_url = raw_html[x].a["href"]
 
                     else:
-                        print(globals.err_prefix + "element has no anchor tag")
+                        sub_page_url = base_url + raw_html[x].a["href"]
+
+                    print(sub_page_url)
+
+                    beef_objects.append(scrape_article(sub_page_url, uReq, soup, keyword_list)) #scrape this article
+
+                else:
+                    print(globals.err_prefix + "element has no anchor tag")
     else:
             print(globals.err_prefix + "tag not found")
 

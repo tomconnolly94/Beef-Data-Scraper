@@ -20,8 +20,9 @@ def scrape_cnn_home(uReq, soup, keyword_list):
         
         if(tag_array[10].text): #ensure the element has an anchor tag
 
+            beef_objects = []
+            
             script_text = tag_array[10].text#.encode('utf8')
-
             result = re.search('CNN.contentModel = (.*);', script_text)
             script_json = demjson.decode(result.group(1))
 
@@ -29,7 +30,7 @@ def scrape_cnn_home(uReq, soup, keyword_list):
                 
                 print(script_json['siblings']['articleList'][x]['uri'])
                 
-                scrape_article(base_url + script_json['siblings']['articleList'][x]['uri'], uReq, soup, keyword_list)
+                beef_objects.append(scrape_article(base_url + script_json['siblings']['articleList'][x]['uri'], uReq, soup, keyword_list))
             
     else:
             print(globals.err_prefix + "tag not found")

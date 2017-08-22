@@ -38,3 +38,5 @@ def scrape_article(path, uReq, soup, keyword_list):
             actors_list = extract_names(content_string) #extract actors from content_string
             
             beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, "") #create beefObject 
+            
+            return beef_obj
