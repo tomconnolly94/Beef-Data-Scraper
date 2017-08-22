@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from cnn_scraper.sub_page_scrapers.cnn_article_scraper import scrape_article # import article scraper
+from scrapers.cnn_scraper.sub_page_scrapers.cnn_article_scraper import scrape_article # import article scraper
 import globals #import globals file
 import re
 import demjson

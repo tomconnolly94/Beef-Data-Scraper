@@ -2,8 +2,8 @@
 #imports
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
-from bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
-from cnn_scraper.cnn_home import scrape_cnn_home # import cnn home scraper
+from scrapers.bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
+from scrapers.cnn_scraper.cnn_home import scrape_cnn_home # import cnn home scraper
 import globals #import globals file
 
 globals.init()

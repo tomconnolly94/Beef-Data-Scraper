@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from bbc_scraper.sub_page_scrapers.bbc_article_scraper import scrape_article # import article scraper
+from scrapers.bbc_scraper.sub_page_scrapers.bbc_article_scraper import scrape_article # import article scraper
 import globals
 
 def scrape_bbc_home(uReq, soup, keyword_list):
