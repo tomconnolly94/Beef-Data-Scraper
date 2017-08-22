@@ -14,13 +14,15 @@ def scrape_article(path, uReq, soup, keyword_list):
     relevant_story = None;
     
     if(len(content_tag_array) > 0): 
-                
+        
+        #check each p tag found for words from the keyword list
         for p in content_tag_array:
             #check if any text from page contains key words stored in list, if keyword found, print page text
             if(any(keyword in p.text for keyword in keyword_list)):
                 relevant_story = True
                 break
         
+        #article is relevant, build a beef record
         if(relevant_story): #execute if a story contains a keyword
             content_string = "" #init content string
             

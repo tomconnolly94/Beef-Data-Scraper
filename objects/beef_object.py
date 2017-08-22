@@ -10,7 +10,7 @@ class BeefObject:
         
         print(self.title)
         print(self.relevant_actors)
-        print(self.content)
+        print("content length: " + str(len(self.content)))
         print(self.date)
         print(self.categories)
         
