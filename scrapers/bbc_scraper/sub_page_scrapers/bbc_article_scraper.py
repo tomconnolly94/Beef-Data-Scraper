@@ -56,9 +56,7 @@ def scrape_article(path, uReq, soup, keyword_list):
             img_tag_array = sub_page_soup.findAll("span", {"class" : "image-and-copyright-container"}) #find tags in the soup object
             
             img_link = ""
-            
-            print(img_tag_array[0])
-            
+                        
             if len(img_tag_array) > 0:
                 if img_tag_array[0].div: #if article contains references to images, extract the first one
                     img_link = img_tag_array[0].div["data-src"]
