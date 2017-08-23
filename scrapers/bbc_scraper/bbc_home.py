@@ -7,22 +7,19 @@ def scrape_bbc_home(uReq, soup, keyword_list):
     base_url = 'http://www.bbc.co.uk' #url to scrape
     init_path = "/news" #base url extension
 
+    print("scraping " + base_url)
+    
     uClient = uReq(base_url + init_path)#make request for page
     page_html = uClient.read() #extract html data from request object
 
     page_soup = soup(page_html, "html.parser") #convert the html to a soup object
     raw_html = page_soup.findAll("div", {"class" : "gs-c-promo"}) #find tags in the soup object
 
-    print(len(raw_html))
-
     if len(raw_html) > 0: #only execute if tags have been found
 
         beef_objects = []
         
         for x in range(0, len(raw_html)): #for each tag
-
-                print(x) #print index for reference
-                print(" ") #print seperator
 
                 if(raw_html[x].a): #ensure the element has an anchor tag
 
@@ -32,10 +29,12 @@ def scrape_bbc_home(uReq, soup, keyword_list):
                     else:
                         sub_page_url = base_url + raw_html[x].a["href"]
 
-                    print(sub_page_url)
-
-                    beef_objects.append(scrape_article(sub_page_url, uReq, soup, keyword_list)) #scrape this article
-
+                    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+                                        
+                    if beef_object != None:
+                        beef_objects.append(beef_object)
+                        beef_object.print_beef()
+                        
                 else:
                     print(globals.err_prefix + "element has no anchor tag")
     else:

@@ -32,12 +32,6 @@ def scrape_article(path, uReq, soup, keyword_list):
             
             title_tag_array = sub_page_soup.findAll("h1", {"class" : "pg-headline"}) #find tags in the soup object
             date_tag_array = sub_page_soup.findAll("p", {"class" : "update-time"}) #find tags in the soup object
-            img_tag_array = sub_page_soup.findAll("div", {"class" : "el__image--fullwidth"}) #find tags in the soup object
-            
-            img_link = ""
-            
-            if len(img_tag_array) > 0: #if article contains references to images, extract the first one
-                img_link = img.div.img['data-src-large']
             
             split_date = date_tag_array[0].text.split(" ") #split the date string into parts
             date_string = split_date[1] + " " + split_date[5] + " " + split_date[6] + " " + split_date[7] + " " #rebuild date string with only relevant parts
@@ -46,7 +40,26 @@ def scrape_article(path, uReq, soup, keyword_list):
             
             highlights = extract_quotes(content_string) #extract quotes from content_string
             
-            # frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
-            beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, "http://cnn.com", [], img_link) #create beefObject 
+            categories = []
+            
+            if "politics" in path:
+                categories.append(2)
+            
+            if "sport" in path:
+                categories.append(4)
+            
+            if "technology" in path:
+                categories.append(6)
+            
+            img_tag_array = sub_page_soup.findAll("div", {"class" : "el__image--fullwidth"}) #find tags in the soup object
+            
+            img_link = ""
+            
+            if len(img_tag_array) > 0: #if article contains references to images, extract the first one
+                img_link = img_tag_array[0].div.img['data-src-large']
+            
+                
+            #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
+            beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, "path", categories, img_link) #create beefObject 
             
             return beef_obj

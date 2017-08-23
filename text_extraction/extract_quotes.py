@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
+import re
 
 def extract_quotes(text):
     
-    #somehow extract quoted text from text variable
-    return ""
+    return re.findall(r'"([^"]*)"', text)

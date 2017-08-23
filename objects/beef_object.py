@@ -11,5 +11,14 @@ class BeefObject:
         self.categories = categories
         self.img_title = img_title
         
-        print(img_title)
         
+    def print_beef(self):
+        
+        print(self.title)
+        print(self.relevant_actors)
+        print("content length: " + str(len(self.content)))
+        print(self.date)
+        print(self.highlights)
+        print(self.data_source)
+        print(self.categories)
+        print(self.img_title)

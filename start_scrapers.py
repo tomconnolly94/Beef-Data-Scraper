@@ -10,5 +10,6 @@ globals.init()
 
 keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls")
 
-#scrape_bbc_home(uReq, soup, keyword_list)
-scrape_cnn_home(uReq, soup, keyword_list)
+while True:
+    scrape_bbc_home(uReq, soup, keyword_list)
+    scrape_cnn_home(uReq, soup, keyword_list)

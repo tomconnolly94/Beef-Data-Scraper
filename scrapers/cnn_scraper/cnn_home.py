@@ -7,6 +7,8 @@ import demjson
 def scrape_cnn_home(uReq, soup, keyword_list):
     
     base_url = 'http://edition.cnn.com' #url to scrape
+    
+    print("scraping " + base_url)
 
     uClient = uReq(base_url)#make request for page
     raw_page_html = uClient.read() #extract html data from request object
@@ -32,9 +34,7 @@ def scrape_cnn_home(uReq, soup, keyword_list):
 
                 if beef_object != None:
                     beef_objects.append(beef_object)
-                    
-                    
-            print(beef_objects)
+                    beef_object.print_beef()
     else:
             print(globals.err_prefix + "tag not found")
     
