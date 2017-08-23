@@ -28,10 +28,13 @@ def scrape_cnn_home(uReq, soup, keyword_list):
 
             for x in range(0, len(script_json['siblings']['articleList'])): #for each tag
                 
-                print(script_json['siblings']['articleList'][x]['uri'])
-                
-                beef_objects.append(scrape_article(base_url + script_json['siblings']['articleList'][x]['uri'], uReq, soup, keyword_list))
-            
+                beef_object = scrape_article(base_url + script_json['siblings']['articleList'][x]['uri'], uReq, soup, keyword_list)
+
+                if beef_object != None:
+                    beef_objects.append(beef_object)
+                    
+                    
+            print(beef_objects)
     else:
             print(globals.err_prefix + "tag not found")
     

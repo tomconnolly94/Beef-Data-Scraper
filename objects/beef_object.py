@@ -1,16 +1,15 @@
 class BeefObject:
     
-    def __init__(self, title, relevant_actors, content, date, categories):
+    def __init__(self, title, relevant_actors, content, date, highlights, data_source, categories, img_title):
         
         self.title = title
         self.relevant_actors = relevant_actors
         self.content = content
         self.date = date
+        self.highlights = highlights
+        self.data_source = data_source
         self.categories = categories
+        self.img_title = img_title
         
-        print(self.title)
-        print(self.relevant_actors)
-        print("content length: " + str(len(self.content)))
-        print(self.date)
-        print(self.categories)
+        print(img_title)
         

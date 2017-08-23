@@ -4,6 +4,7 @@ import re
 import demjson
 from objects.beef_object import BeefObject
 from text_extraction.extract_names import extract_names
+from text_extraction.extract_quotes import extract_quotes
 
 def scrape_article(path, uReq, soup, keyword_list):
     sub_page_html = uReq(path).read()
@@ -31,12 +32,21 @@ def scrape_article(path, uReq, soup, keyword_list):
             
             title_tag_array = sub_page_soup.findAll("h1", {"class" : "pg-headline"}) #find tags in the soup object
             date_tag_array = sub_page_soup.findAll("p", {"class" : "update-time"}) #find tags in the soup object
+            img_tag_array = sub_page_soup.findAll("div", {"class" : "el__image--fullwidth"}) #find tags in the soup object
+            
+            img_link = ""
+            
+            if len(img_tag_array) > 0: #if article contains references to images, extract the first one
+                img_link = img.div.img['data-src-large']
             
             split_date = date_tag_array[0].text.split(" ") #split the date string into parts
             date_string = split_date[1] + " " + split_date[5] + " " + split_date[6] + " " + split_date[7] + " " #rebuild date string with only relevant parts
             
             actors_list = extract_names(content_string) #extract actors from content_string
             
-            beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, "") #create beefObject 
+            highlights = extract_quotes(content_string) #extract quotes from content_string
+            
+            # frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
+            beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, "http://cnn.com", [], img_link) #create beefObject 
             
             return beef_obj
