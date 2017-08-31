@@ -24,7 +24,7 @@ def scrape_cnn_home(uReq, soup, keyword_list):
 
             beef_objects = []
             
-            script_text = tag_array[10].text#.encode('utf8')
+            script_text = tag_array[10].text
             result = re.search('CNN.contentModel = (.*);', script_text)
             script_json = demjson.decode(result.group(1))
 
@@ -34,7 +34,9 @@ def scrape_cnn_home(uReq, soup, keyword_list):
 
                 if beef_object != None:
                     beef_objects.append(beef_object)
-                    beef_object.print_beef()
+                    #beef_object.print_beef()
+                    
+                return beef_objects
     else:
             print(globals.err_prefix + "tag not found")
     

@@ -40,7 +40,7 @@ def scrape_article(path, uReq, soup, keyword_list):
             actors_list = extract_names(content_string) #extract actors from content_string
 
             highlights = extract_quotes(content_string) #extract quotes from content_string
-                        
+            
             category = mini_info_panel_tag_array[1].a.text
             categories = []
             

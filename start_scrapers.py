@@ -10,6 +10,37 @@ globals.init()
 
 keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls")
 
+file_name = "title_record.txt"
+
+def unique_write_to_file(text, file):
+    r_file = open("title_record.txt", "r")
+    line_found = None
+    
+    for line in r_file:
+
+        print(line)
+        print(text)
+        
+        if line == text:
+            line_found = True
+            break
+        
+    r_file.close()
+    
+    if line_found is None:
+        w_file = open("title_record.txt", "a")
+        w_file.write(str("\n" + text))
+        w_file.close()
+    
 while True:
-    scrape_bbc_home(uReq, soup, keyword_list)
-    scrape_cnn_home(uReq, soup, keyword_list)
+
+    beef_objects = scrape_bbc_home(uReq, soup, keyword_list)
+
+    for beef_object in beef_objects:
+        unique_write_to_file(beef_object.title, file_name)
+
+
+    beef_objects = scrape_cnn_home(uReq, soup, keyword_list)
+    
+    for beef_object in beef_objects:
+        unique_write_to_file(beef_object.title, file_name)
