@@ -13,7 +13,7 @@ keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argu
 file_name = "title_record.txt"
 
 def unique_write_to_file(text, file):
-    r_file = open("title_record.txt", "r")
+    r_file = open(file, "r")
     line_found = None
     
     for line in r_file:
@@ -28,7 +28,7 @@ def unique_write_to_file(text, file):
     r_file.close()
     
     if line_found is None:
-        w_file = open("title_record.txt", "a")
+        w_file = open(file, "a")
         w_file.write(str("\n" + text))
         w_file.close()
     
