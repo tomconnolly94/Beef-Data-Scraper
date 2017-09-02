@@ -8,7 +8,7 @@ import globals #import globals file
 
 globals.init()
 
-keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls")
+keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls", "Hurricane")
 
 file_name = "title_record.txt"
 
@@ -18,10 +18,7 @@ def unique_write_to_file(text, file):
     
     for line in r_file:
 
-        print(line)
-        print(text)
-        
-        if line == text:
+        if line == text + "\n" or line == text:
             line_found = True
             break
         
@@ -41,6 +38,6 @@ while True:
 
 
     beef_objects = scrape_cnn_home(uReq, soup, keyword_list)
-    
+
     for beef_object in beef_objects:
         unique_write_to_file(beef_object.title, file_name)
