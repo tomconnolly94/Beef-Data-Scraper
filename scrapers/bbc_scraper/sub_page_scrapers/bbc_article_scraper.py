@@ -41,17 +41,21 @@ def scrape_article(path, uReq, soup, keyword_list):
 
             highlights = extract_quotes(content_string) #extract quotes from content_string
                         
-            category = mini_info_panel_tag_array[1].a.text
             categories = []
             
-            if "Politics" in category:
-                categories.append(2)
+            if len(mini_info_panel_tag_array) > 1:
             
-            if "sport" in category:
-                categories.append(4)
-            
-            if "Technology" in category:
-                categories.append(6)
+                category = mini_info_panel_tag_array[1].a.text
+
+
+                if "Politics" in category:
+                    categories.append(2)
+
+                if "sport" in category:
+                    categories.append(4)
+
+                if "Technology" in category:
+                    categories.append(6)
                 
             img_tag_array = sub_page_soup.findAll("span", {"class" : "image-and-copyright-container"}) #find tags in the soup object
             
@@ -62,6 +66,8 @@ def scrape_article(path, uReq, soup, keyword_list):
                     img_link = img_tag_array[0].div["data-src"]
                 elif img_tag_array[0].img:
                     img_link = img_tag_array[0].img["src"]
+                    
+                    
             #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
             beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, path, categories, img_link) #create beefObject
             

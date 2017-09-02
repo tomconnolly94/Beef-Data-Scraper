@@ -21,22 +21,30 @@ def scrape_bbc_home(uReq, soup, keyword_list):
         
         for x in range(0, len(raw_html)): #for each tag
 
-                if(raw_html[x].a): #ensure the element has an anchor tag
+            if(raw_html[x].a): #ensure the element has an anchor tag
 
-                    if("http://" in raw_html[x].a["href"]): #check if the a href is an absolute url or an absolute path
-                        sub_page_url = raw_html[x].a["href"]
+                if("http://" in raw_html[x].a["href"]): #check if the a href is an absolute url or an absolute path
+                    sub_page_url = raw_html[x].a["href"]
 
-                    else:
-                        sub_page_url = base_url + raw_html[x].a["href"]
+                else:
+                    sub_page_url = base_url + raw_html[x].a["href"]
+                    
+                path_split_1 = sub_page_url.split("/")#split path by /
+                path_split_2 = path_split_1[len(path_split_1) - 1 ].split("-")#get final field in path_split_1 and split by -
+                
+                if path_split_2[0] != "blogs": #ensure we are not scraping a blog page
 
                     beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
-                                        
+
                     if beef_object != None:
                         beef_objects.append(beef_object)
-                        beef_object.print_beef()
-                        
-                else:
-                    print(globals.err_prefix + "element has no anchor tag")
+                        #beef_object.print_beef()
+
+            else:
+                print(globals.err_prefix + "element has no anchor tag")
+
+        return beef_objects
+            
     else:
             print(globals.err_prefix + "tag not found")
 
