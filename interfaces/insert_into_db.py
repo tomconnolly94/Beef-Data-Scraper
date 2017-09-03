@@ -10,8 +10,6 @@ def insert_if_not_exist(beef_object):
     
     results = db.scraped_training_events_dump_v0_1.find({ "title" : beef_object.title })
     
-    print(results.count())
-    
     if results.count()  < 1:
     
         document = ({

@@ -8,16 +8,12 @@ def scrape_cnn_home(uReq, soup, keyword_list):
     
     base_url = 'http://edition.cnn.com' #url to scrape
     
-    print("scraping " + base_url)
-
     uClient = uReq(base_url)#make request for page
     raw_page_html = uClient.read() #extract html data from request object
 
     page_soup = soup(raw_page_html, "html.parser") #convert the html to a soup object
     tag_array = page_soup.findAll("script")#, text=pattern) #find tags in the soup object
 
-    print("Total tags found: " + str(len(raw_page_html)))
-    
     if len(tag_array) > 0: #only execute if tags have been found
         
         if(tag_array[10].text): #ensure the element has an anchor tag
@@ -37,9 +33,6 @@ def scrape_cnn_home(uReq, soup, keyword_list):
                     #beef_object.print_beef()
                                 
             return beef_objects
-    else:
-            print(globals.err_prefix + "tag not found")
-    
 
     #dispose
     uClient.close()
