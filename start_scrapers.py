@@ -9,12 +9,14 @@ import globals #import globals file
 
 globals.init()
 
-keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls", "Hurricane")
+#keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls", "Hurricane")
+keyword_list = ()
 
 file_name = "title_record.txt"
 
 while True:
 
+    
     beef_objects = scrape_bbc_home(uReq, soup, keyword_list)
 
     for beef_object in beef_objects:
