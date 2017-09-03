@@ -1,6 +1,6 @@
 class BeefObject:
     
-    def __init__(self, title, relevant_actors, content, date, highlights, data_source, categories, img_title, links):
+    def __init__(self, title, relevant_actors, content, date, highlights, data_source, categories, img_title):
         
         self.title = title
         self.relevant_actors = relevant_actors
@@ -10,7 +10,6 @@ class BeefObject:
         self.data_source = data_source
         self.categories = categories
         self.img_title = img_title
-        self.links = links
         
         
     def print_beef(self):
@@ -23,4 +22,3 @@ class BeefObject:
         print(self.data_source)
         print(self.categories)
         print(self.img_title)
-        print(self.links)
