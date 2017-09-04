@@ -14,7 +14,7 @@ def insert_if_not_exist(beef_object):
     
         document = ({
             "title" : beef_object.title,
-            "reelvant_actors" : beef_object.relevant_actors, 
+            "relevant_actors" : beef_object.relevant_actors, 
             "description" : beef_object.content,
             #"date_added" : beef_object, 
             "event_date" : beef_object.date,
