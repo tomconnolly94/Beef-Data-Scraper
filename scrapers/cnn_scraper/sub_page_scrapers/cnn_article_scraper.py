@@ -61,6 +61,7 @@ def scrape_article(path, uReq, soup, keyword_list):
             img_link = ""
             
             if len(img_tag_array) > 0: #if article contains references to images, extract the first one
+                print(img_tag_array)
                 img_link = img_tag_array[0].div.img['data-src-large']
             
                 
