@@ -1,0 +1,261 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 884, in _get_socket_no_auth
+    sock_info = self.sockets.pop()
+KeyError: 'pop from an empty set'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 803, in connect
+    sock = _configured_socket(self.address, self.opts)
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 705, in _configured_socket
+    sock = _create_connection(address, options)
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 661, in _create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+  File "/usr/lib/python3.4/socket.py", line 530, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "start_scrapers.py", line 29, in <module>
+    insert_if_not_exist(beef_object)
+  File "/home/tom/beeftracker/beeftracker_scraping/interfaces/insert_into_db.py", line 9, in insert_if_not_exist
+    db = open_db_connection()
+  File "/home/tom/beeftracker/beeftracker_scraping/interfaces/db_config.py", line 14, in open_db_connection
+    db.authenticate(MONGO_USER, MONGO_PASS)
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/database.py", line 1075, in authenticate
+    connect=True)
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/mongo_client.py", line 546, in _cache_credentials
+    with server.get_socket(all_credentials) as sock_info:
+  File "/usr/lib/python3.4/contextlib.py", line 59, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/server.py", line 168, in get_socket
+    with self.pool.get_socket(all_credentials, checkout) as sock_info:
+  File "/usr/lib/python3.4/contextlib.py", line 59, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 850, in get_socket
+    sock_info = self._get_socket_no_auth()
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 887, in _get_socket_no_auth
+    sock_info = self.connect()
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 823, in connect
+    _raise_connection_failure(self.address, error)
+  File "/usr/local/lib/python3.4/dist-packages/pymongo/pool.py", line 269, in _raise_connection_failure
+    raise AutoReconnect(msg)
+pymongo.errors.AutoReconnect: ds141937.mlab.com:41937: [Errno -2] Name or service not known
+Traceback (most recent call last):
+  File "/usr/lib/python3.4/urllib/request.py", line 1174, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1090, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1128, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.4/http/client.py", line 1086, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.4/http/client.py", line 924, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.4/http/client.py", line 859, in send
+    self.connect()
+  File "/usr/lib/python3.4/http/client.py", line 836, in connect
+    self.timeout, self.source_address)
+  File "/usr/lib/python3.4/socket.py", line 491, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/usr/lib/python3.4/socket.py", line 530, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "beeftracker_scraping/start_scrapers.py", line 20, in <module>
+    beef_objects = scrape_bbc_home(uReq, soup, keyword_list)
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/bbc_home.py", line 35, in scrape_bbc_home
+    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/sub_page_scrapers/bbc_article_scraper.py", line 10, in scrape_article
+    sub_page_html = uReq(path).read()
+  File "/usr/lib/python3.4/urllib/request.py", line 153, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.4/urllib/request.py", line 455, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.4/urllib/request.py", line 473, in _open
+    '_open', req)
+  File "/usr/lib/python3.4/urllib/request.py", line 433, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.4/urllib/request.py", line 1202, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.4/urllib/request.py", line 1176, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno -2] Name or service not known>
+Traceback (most recent call last):
+  File "/usr/lib/python3.4/urllib/request.py", line 1174, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1090, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1128, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.4/http/client.py", line 1086, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.4/http/client.py", line 924, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.4/http/client.py", line 859, in send
+    self.connect()
+  File "/usr/lib/python3.4/http/client.py", line 836, in connect
+    self.timeout, self.source_address)
+  File "/usr/lib/python3.4/socket.py", line 491, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/usr/lib/python3.4/socket.py", line 530, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "beeftracker_scraping/start_scrapers.py", line 20, in <module>
+    beef_objects = scrape_bbc_home(uReq, soup, keyword_list)
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/bbc_home.py", line 35, in scrape_bbc_home
+    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/sub_page_scrapers/bbc_article_scraper.py", line 10, in scrape_article
+    sub_page_html = uReq(path).read()
+  File "/usr/lib/python3.4/urllib/request.py", line 153, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.4/urllib/request.py", line 455, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.4/urllib/request.py", line 473, in _open
+    '_open', req)
+  File "/usr/lib/python3.4/urllib/request.py", line 433, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.4/urllib/request.py", line 1202, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.4/urllib/request.py", line 1176, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno -2] Name or service not known>
+Traceback (most recent call last):
+  File "/usr/lib/python3.4/urllib/request.py", line 1174, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1090, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1128, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.4/http/client.py", line 1086, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.4/http/client.py", line 924, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.4/http/client.py", line 859, in send
+    self.connect()
+  File "/usr/lib/python3.4/http/client.py", line 836, in connect
+    self.timeout, self.source_address)
+  File "/usr/lib/python3.4/socket.py", line 491, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/usr/lib/python3.4/socket.py", line 530, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "beeftracker_scraping/start_scrapers.py", line 20, in <module>
+    beef_objects = scrape_bbc_home(uReq, soup, keyword_list)
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/bbc_home.py", line 35, in scrape_bbc_home
+    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/sub_page_scrapers/bbc_article_scraper.py", line 10, in scrape_article
+    sub_page_html = uReq(path).read()
+  File "/usr/lib/python3.4/urllib/request.py", line 153, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.4/urllib/request.py", line 455, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.4/urllib/request.py", line 473, in _open
+    '_open', req)
+  File "/usr/lib/python3.4/urllib/request.py", line 433, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.4/urllib/request.py", line 1202, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.4/urllib/request.py", line 1176, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno -2] Name or service not known>
+Traceback (most recent call last):
+  File "/usr/lib/python3.4/urllib/request.py", line 1174, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1090, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1128, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.4/http/client.py", line 1086, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.4/http/client.py", line 924, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.4/http/client.py", line 859, in send
+    self.connect()
+  File "/usr/lib/python3.4/http/client.py", line 836, in connect
+    self.timeout, self.source_address)
+  File "/usr/lib/python3.4/socket.py", line 491, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/usr/lib/python3.4/socket.py", line 530, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "beeftracker_scraping/start_scrapers.py", line 20, in <module>
+    beef_objects = scrape_bbc_home(uReq, soup, keyword_list)
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/bbc_home.py", line 35, in scrape_bbc_home
+    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/sub_page_scrapers/bbc_article_scraper.py", line 10, in scrape_article
+    sub_page_html = uReq(path).read()
+  File "/usr/lib/python3.4/urllib/request.py", line 153, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.4/urllib/request.py", line 455, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.4/urllib/request.py", line 473, in _open
+    '_open', req)
+  File "/usr/lib/python3.4/urllib/request.py", line 433, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.4/urllib/request.py", line 1202, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.4/urllib/request.py", line 1176, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno -2] Name or service not known>
+Traceback (most recent call last):
+  File "/usr/lib/python3.4/urllib/request.py", line 1174, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1090, in request
+    self._send_request(method, url, body, headers)
+  File "/usr/lib/python3.4/http/client.py", line 1128, in _send_request
+    self.endheaders(body)
+  File "/usr/lib/python3.4/http/client.py", line 1086, in endheaders
+    self._send_output(message_body)
+  File "/usr/lib/python3.4/http/client.py", line 924, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.4/http/client.py", line 859, in send
+    self.connect()
+  File "/usr/lib/python3.4/http/client.py", line 836, in connect
+    self.timeout, self.source_address)
+  File "/usr/lib/python3.4/socket.py", line 491, in create_connection
+    for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+  File "/usr/lib/python3.4/socket.py", line 530, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -2] Name or service not known
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "beeftracker_scraping/start_scrapers.py", line 20, in <module>
+    beef_objects = scrape_bbc_home(uReq, soup, keyword_list)
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/bbc_home.py", line 35, in scrape_bbc_home
+    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+  File "/home/tom/beeftracker/beeftracker_scraping/scrapers/bbc_scraper/sub_page_scrapers/bbc_article_scraper.py", line 10, in scrape_article
+    sub_page_html = uReq(path).read()
+  File "/usr/lib/python3.4/urllib/request.py", line 153, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.4/urllib/request.py", line 455, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.4/urllib/request.py", line 473, in _open
+    '_open', req)
+  File "/usr/lib/python3.4/urllib/request.py", line 433, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.4/urllib/request.py", line 1202, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+  File "/usr/lib/python3.4/urllib/request.py", line 1176, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno -2] Name or service not known>

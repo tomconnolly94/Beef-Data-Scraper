@@ -39,7 +39,7 @@ def insert_if_not_exist(beef_object):
                 print("inserted")
                 break
 
-            except pymongo.errors.AutoReconnect:
+            except exceptions as e:
                 print("Pymongo error, retrying db connection...")
                 db.close()
         
