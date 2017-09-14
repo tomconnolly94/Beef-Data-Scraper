@@ -9,13 +9,16 @@ def insert_if_not_exist(beef_object):
     
     while True:
         
+        print("loop entered")
+        
         #open db connection
         db = open_db_connection()
 
         results = db.scraped_training_events_dump_v0_1.find({ "title" : beef_object.title })
 
-        if results.count()  < 1:
+        if results.count() < 1:
 
+            print("insert procedure started")
 
             document = ({
                 "title" : beef_object.title,
@@ -33,6 +36,7 @@ def insert_if_not_exist(beef_object):
             try:
                 db.scraped_training_events_dump_v0_1.insert(document)
                 db.close()
+                print("inserted")
                 break
 
             except pymongo.errors.AutoReconnect:
