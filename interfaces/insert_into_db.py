@@ -41,7 +41,7 @@ def insert_if_not_exist(beef_object):
 
             except exceptions as e:
                 print("Pymongo error, retrying db connection...")
-                db.close()
+                db.close(
         
 '''      
 beef_object = BeefObject(
