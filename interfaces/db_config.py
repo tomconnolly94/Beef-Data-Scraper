@@ -10,7 +10,7 @@ def open_db_connection():
     MONGO_PORT = 41937
 
     db_connection = pymongo.MongoClient(MONGO_HOST, MONGO_PORT) # server.local_bind_port is assigned local port
-    db = client[MONGO_DB]
+    db = db_connection[MONGO_DB]
     db.authenticate(MONGO_USER, MONGO_PASS)
     
     return db
