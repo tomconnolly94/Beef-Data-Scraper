@@ -35,13 +35,13 @@ def insert_if_not_exist(beef_object):
 
             try:
                 db.scraped_training_events_dump_v0_1.insert(document)
-                db.close()
+                db_connection.close()
                 print("inserted")
                 break
 
-            except exceptions as e:
+            except ConnectionFailure:
                 print("Pymongo error, retrying db connection...")
-                db.close(
+                db_connection.close()
         
 '''      
 beef_object = BeefObject(
