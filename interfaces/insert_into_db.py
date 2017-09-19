@@ -10,6 +10,7 @@ def insert_if_not_exist(beef_object):
     while True:
         
         print("loop entered")
+        print(beef_object.title)
         
         #open db connection
         db = open_db_connection()
@@ -41,6 +42,8 @@ def insert_if_not_exist(beef_object):
             except ConnectionFailure:
                 print("Pymongo error, retrying db connection...")
         
+        else:
+            break; #break loop because record already exists
 '''      
 beef_object = BeefObject(
     "Storm Harvey: Trump to make second visit to Texas", 
