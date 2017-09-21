@@ -3,11 +3,12 @@
 import sys
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
-from wikipedia_scraper import pre_scrape_page_check
-from wikipedia_scraper import scrape_actor_from_wiki
+from actor_scraping.wikipedia_scraper import pre_scrape_page_check
+from actor_scraping.wikipedia_scraper import scrape_actor_from_wiki
 
 
 def scrape_actor(name):
+    
     pre_scrape_check_result = pre_scrape_page_check(uReq, soup, name)
 
     if isinstance(pre_scrape_check_result, list):

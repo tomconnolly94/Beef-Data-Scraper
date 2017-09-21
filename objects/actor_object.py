@@ -16,7 +16,7 @@ class ActorObject:
         self.img_title = img_title
         
         
-    def print_beef(self):
+    def print_actor(self):
         
         print(self.stage_name)
         print(self.birth_name)
@@ -30,3 +30,7 @@ class ActorObject:
         print(self.associated_actors)
         print(self.links)
         print(self.img_title)
+        
+    def set_stage_name(self, stage_name):
+        
+        self.stage_name = stage_name

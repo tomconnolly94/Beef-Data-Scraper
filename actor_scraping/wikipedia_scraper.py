@@ -2,6 +2,8 @@
 #imports
 import sys
 import urllib
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 from objects.actor_object import ActorObject
 
 # function: validate a wikipedia URL, if valid, return the URL, if not valid, return the options provided by wikipedia
@@ -46,8 +48,6 @@ def pre_scrape_page_check(uReq, soup, actor_name):
 # function: take a valid wikipedia url and scrape data from it to form an actor db record
 def scrape_actor_from_wiki(uReq, soup, op_url):
 
-    print(op_url)
-
     try:
         page_soup = access_page(uReq, soup, op_url)
         
@@ -55,15 +55,55 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
 
         if raw_html is not None:
             bio_rows = raw_html[0].findAll("tr")
+            
+            #init variables
+            all_data = dict()
+            stage_name = birth_name = nicknames = d_o_b = occupations = origin = achievements = bio = data_sources = associated_actors = links = img_title = ""
 
-            for row in bio_rows:
+            for index, row in enumerate(bio_rows):
                 
                 if row.th is not None and row.th.text is not None:
-                    print(row.th.text)
                     
-                if row.td is not None and row.td.text is not None:
-                    print(row.td.text)
+                    if row.td is not None and row.td.text is not None:
+                        
+                        all_data[row.th.text] = row.td.text
+                        
+                        if "birth name" in row.th.text.lower(): #get birth name
+                            birth_name = row.td.text
+                            
+                        elif "name(s)" in row.th.text.lower(): # get nicknames
+                            nicknames = row.td.text
+                        
+                        elif "born" in row.th.text.lower(): # get birth date and origin
+                            
+                            d_o_b_origin = row.td.text.split("\n")
+                            
+                            d_o_b = d_o_b_origin[0]
+                            all_data["d_o_b"] = d_o_b
+                            origin = d_o_b_origin[1]
+                            all_data["Born"] = origin
+                        
+                        elif "occupation" in row.th.text.lower(): # get occupations
+                            occupations = row.td.text
 
+                        elif "work" in row.th.text.lower(): # get acheivements
+                            achievements = row.td.text
+                            
+                        elif "website" in row.th.text.lower(): # get acheivements
+                            links = row.td.text
+
+            
+            stage_name = page_soup.find("h1", {"id" : "firstHeading"}).text #find stage name from header
+            
+            bio = page_soup.findAll("div", {"class" : "mw-parser-output"})[0].p.text
+            
+            pp.pprint(all_data)
+            actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, associated_actors, links, img_title)
+            
+            actor_object.print_actor()
+            
+            return { "actor_object": actor_object, "field_data_dump" : all_data}
+                        
     except urllib.error.HTTPError as err:
         if err.code == 404:
            print("404 error")
