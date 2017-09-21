@@ -13,17 +13,11 @@ def scrape_actor(name):
     pre_scrape_check_result = pre_scrape_page_check(uReq, soup, name)
 
     if isinstance(pre_scrape_check_result, list):
-
-        print("1")
         print(pre_scrape_check_result)
 
     elif isinstance(pre_scrape_check_result, str):
-
-        print("2")
-        print(pp.pprint(scrape_actor_from_wiki(uReq, soup, pre_scrape_check_result)["field_data_dump"]))
+        return scrape_actor_from_wiki(uReq, soup, pre_scrape_check_result)["field_data_dump"]
 
     else:
-
-        print("3")
         print("pre-scrape check returned un-recognised value")
         
