@@ -5,7 +5,8 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 from actor_scraping.wikipedia_scraper import pre_scrape_page_check
 from actor_scraping.wikipedia_scraper import scrape_actor_from_wiki
-
+import pprint
+pp = pprint.PrettyPrinter(indent=4)
 
 def scrape_actor(name):
     
@@ -19,7 +20,7 @@ def scrape_actor(name):
     elif isinstance(pre_scrape_check_result, str):
 
         print("2")
-        print(scrape_actor_from_wiki(uReq, soup, pre_scrape_check_result))
+        print(pp.pprint(scrape_actor_from_wiki(uReq, soup, pre_scrape_check_result)["field_data_dump"]))
 
     else:
 

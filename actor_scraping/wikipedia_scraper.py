@@ -94,13 +94,9 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
 
             
             stage_name = page_soup.find("h1", {"id" : "firstHeading"}).text #find stage name from header
-            
             bio = page_soup.findAll("div", {"class" : "mw-parser-output"})[0].p.text
-            
-            pp.pprint(all_data)
+
             actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, associated_actors, links, img_title)
-            
-            actor_object.print_actor()
             
             return { "actor_object": actor_object, "field_data_dump" : all_data}
                         
