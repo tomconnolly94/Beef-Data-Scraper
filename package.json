@@ -1,0 +1,20 @@
+{
+  "name": "beeftracker_scraping",
+  "version": "1.0.0",
+  "description": "data scraping for content generation for beeftracker.co.uk",
+  "main": "run_actor_scraper.js",
+  "dependencies": {
+    "python-shell": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://beeftracker@bitbucket.org/beeftracker/beeftracker_scraping.git"
+  },
+  "author": "Tom Connolly",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/beeftracker/beeftracker_scraping#readme"
+}

@@ -17,7 +17,4 @@ def scrape_actor(name):
 
     elif isinstance(pre_scrape_check_result, str):
         return scrape_actor_from_wiki(uReq, soup, pre_scrape_check_result)["field_data_dump"]
-
-    else:
-        print("pre-scrape check returned un-recognised value")
         

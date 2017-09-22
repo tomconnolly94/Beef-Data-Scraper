@@ -125,7 +125,6 @@ def prepare_name(name):
     for index, name in enumerate(actor_name_split):
         if index != 0:
             if name[0] == "(":
-                print("hey")
                 actor_name_us += "_" + name.lower()
             else:
                 actor_name_us += "_" + name.title()
