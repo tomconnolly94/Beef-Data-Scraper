@@ -121,19 +121,16 @@ def access_page(uReq, soup, op_url):
 def prepare_name(name):
     
     actor_name_split = name.split(" ")
-    to_be_removed = ["lady", "lord", "dame", "sir", "queen", "king", "mrs", "mr"]
     
     actor_name_us = actor_name_split[0]
     
     for index, name in enumerate(actor_name_split):
-                        
-        if name.lower() not in to_be_removed:
             
-            if index != 0:
-                if name[0] == "(":
-                    actor_name_us += "_" + name.lower()
-                else:
-                    actor_name_us += "_" + name.title()
+        if index != 0:
+            if name[0] == "(":
+                actor_name_us += "_" + name.lower()
+            else:
+                actor_name_us += "_" + name
 
     print(actor_name_us)
     return actor_name_us
