@@ -53,7 +53,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
         
         raw_html = page_soup.findAll("table", {"class" : "infobox"}) #find tags in the soup object
 
-        if raw_html is not None:
+        if raw_html is not None and len(raw_html) > 0:
             bio_rows = raw_html[0].findAll("tr")
             
             #init variables
@@ -101,6 +101,8 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                    
             return { "actor_object": actor_object.toJSON(), "field_data_dump" : all_data}
                         
+        return "nothing_found"
+            
     except urllib.error.HTTPError as err:
         if err.code == 404:
            print("404 error")
@@ -119,15 +121,20 @@ def access_page(uReq, soup, op_url):
 def prepare_name(name):
     
     actor_name_split = name.split(" ")
+    to_be_removed = ["lady", "lord", "dame", "sir", "queen", "king", "mrs", "mr"]
     
     actor_name_us = actor_name_split[0]
     
     for index, name in enumerate(actor_name_split):
-        if index != 0:
-            if name[0] == "(":
-                actor_name_us += "_" + name.lower()
-            else:
-                actor_name_us += "_" + name.title()
+                        
+        if name.lower() not in to_be_removed:
+            
+            if index != 0:
+                if name[0] == "(":
+                    actor_name_us += "_" + name.lower()
+                else:
+                    actor_name_us += "_" + name.title()
 
+    print(actor_name_us)
     return actor_name_us
     
