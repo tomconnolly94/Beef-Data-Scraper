@@ -99,7 +99,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
             
             actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, associated_actors, links, img_title)
                    
-            return { "actor_object": actor_object, "field_data_dump" : all_data}
+            return { "actor_object": actor_object.toJSON(), "field_data_dump" : all_data}
                         
     except urllib.error.HTTPError as err:
         if err.code == 404:

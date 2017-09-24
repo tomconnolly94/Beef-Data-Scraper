@@ -11,7 +11,7 @@ if(/^win/.test(process.platform)){ //Windows
         pythonPath: 'C:/Users/Tom.DESKTOP-D3OBC42/AppData/Local/Programs/Python/Python36-32/python',
         pythonOptions: ['-u'],
         scriptPath: 'C:/Users/Tom.DESKTOP-D3OBC42/beeftracker/news_scraping_project/beeftracker_scraping',
-        args: ['Dwayne Johnson']
+        args: [process.argv[2]]
     };
 }
 else{ //Linux
@@ -20,12 +20,12 @@ else{ //Linux
         pythonPath: '/usr/bin/python3',
         pythonOptions: ['-u'],
         scriptPath: '/home/tom/beeftracker/news_scraping_project/beeftracker_scraping',
-        args: ['Dwayne Johnson']
+        args: [process.argv[2]]
     };
 }
 
 PythonShell.run('scrape_actor.py', options, function (err, results) {
 	if (err) throw err;
 	// results is an array consisting of messages collected during execution
-	console.log('results: %j', results);
+	console.log(results);
 });

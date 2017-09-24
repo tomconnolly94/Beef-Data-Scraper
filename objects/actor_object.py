@@ -1,3 +1,5 @@
+import json
+
 class ActorObject:
     
     def __init__(self, stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, associated_actors, links, img_title):
@@ -34,3 +36,23 @@ class ActorObject:
     def set_stage_name(self, stage_name):
         
         self.stage_name = stage_name
+        
+    def toJSON(self):
+        
+        actor_json = {}
+        
+        actor_json['stage_name'] = self.stage_name
+        actor_json['birth_name'] = self.birth_name
+        actor_json['nicknames'] = self.nicknames
+        actor_json['d_o_b'] = self.d_o_b
+        actor_json['occupations'] = self.occupations
+        actor_json['origin'] = self.origin
+        actor_json['achievements'] = self.achievements
+        actor_json['bio'] = self.bio
+        actor_json['data_sources'] = self.data_sources
+        actor_json['associated_actors'] = self.associated_actors
+        actor_json['links'] = self.links
+        actor_json['img_title'] = self.img_title
+        
+        return json.dumps(actor_json)    
+    
