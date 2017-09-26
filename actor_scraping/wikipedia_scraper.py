@@ -20,16 +20,18 @@ def pre_scrape_page_check(uReq, soup, actor_name):
         
         #check if page exists, or further action is required
         raw_html = page_soup.find("div", {"id" : "mw-content-text"}) #find tags in the soup object
+                
         if raw_html is not None:
             
             if "may refer to" in raw_html.div.p.text:
                 
-                list_items = raw_html.div.ul.findAll("li")
+                list_items = raw_html.div.findAll("li")
 
                 link_differentiators = []
 
                 for list_item in list_items:
-                    link_differentiators.append(list_item.a.text.replace(actor_name, ""))
+                    if list_item.a is not None and list_item.a.has_attr("title"):
+                        link_differentiators.append(list_item.a.text)
 
                 return link_differentiators
             else:
@@ -58,8 +60,12 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
             
             #init variables
             all_data = dict()
-            stage_name = birth_name = nicknames = d_o_b = origin = achievements = bio = links = img_title = ""
-            occupations = assoc_actors = []
+            stage_name = birth_name = d_o_b = origin = bio = img_title = ""
+            occupations = []
+            assoc_actors = []
+            links = []
+            nicknames = []
+            achievements = []
             
             data_sources = op_url
             
@@ -74,9 +80,6 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                         if "birth name" in row.th.text.lower(): #get birth name
                             birth_name = row.td.text
                             
-                        elif "name(s)" in row.th.text.lower(): # get nicknames
-                            nicknames = row.td.text
-                        
                         elif "born" in row.th.text.lower(): # get birth date and origin
                             
                             name_dob_origin = row.td.text.split("\n")
@@ -93,23 +96,24 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                                 all_data["Date of Birth"] = d_o_b
                                 origin = name_dob_origin[2] + ", " + name_dob_origin[3]
                                 all_data["Origin"] = origin
-                                
+                             
+                        elif "name(s)" in row.th.text.lower(): # get nicknames
+                            nicknames = row.td.text.split(",")   
                         
                         elif "occupation" in row.th.text.lower(): # get occupations
-                            occupations = row.td.text.split(",")
+                            occupations.extend(row.td.text.split(","))
 
                         elif "work" in row.th.text.lower(): # get acheivements
-                            achievements = row.td.text
+                            achievements.extend(row.td.text.split(","))
                             
                         elif "website" in row.th.text.lower(): # get acheivements
-                            links = row.td.text
+                            links = [row.td.text]
 
+                
                 elif row.td.a.img is not None:
                     img_title = row.td.a.img['src']
                     
-                    
             stage_name = page_soup.find("h1", {"id" : "firstHeading"}).text #find stage name from header
-            
             bio = page_soup.findAll("div", {"class" : "mw-parser-output"})[0].p.text
             
             actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, assoc_actors, links, img_title)
@@ -142,10 +146,13 @@ def prepare_name(name):
     for index, name in enumerate(actor_name_split):
             
         if index != 0:
+            '''
             if name[0] == "(":
                 actor_name_us += "_" + name.lower()
             else:
                 actor_name_us += "_" + name
-
+            '''
+            actor_name_us += "_" + name
+            
     return actor_name_us
     
