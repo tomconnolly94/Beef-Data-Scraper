@@ -58,8 +58,11 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
             
             #init variables
             all_data = dict()
-            stage_name = birth_name = nicknames = d_o_b = occupations = origin = achievements = bio = data_sources = associated_actors = links = img_title = ""
-
+            stage_name = birth_name = nicknames = d_o_b = origin = achievements = bio = links = img_title = ""
+            occupations = assoc_actors = []
+            
+            data_sources = op_url
+            
             for index, row in enumerate(bio_rows):
                 
                 if row.th is not None and row.th.text is not None:
@@ -67,7 +70,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                     if row.td is not None and row.td.text is not None:
                         
                         all_data[row.th.text] = row.td.text
-                        
+                                                
                         if "birth name" in row.th.text.lower(): #get birth name
                             birth_name = row.td.text
                             
@@ -76,15 +79,24 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                         
                         elif "born" in row.th.text.lower(): # get birth date and origin
                             
-                            d_o_b_origin = row.td.text.split("\n")
-                            
-                            d_o_b = d_o_b_origin[0]
-                            all_data["d_o_b"] = d_o_b
-                            origin = d_o_b_origin[1]
-                            all_data["Born"] = origin
+                            name_dob_origin = row.td.text.split("\n")
+
+                            if len(name_dob_origin) == 2:
+                                d_o_b = name_dob_origin[0]
+                                all_data["Date of Birth"] = d_o_b
+                                origin = name_dob_origin[1]
+                                all_data["Origin"] = origin
+                            elif len(name_dob_origin) == 3 or len(name_dob_origin) == 4:
+                                birth_name = name_dob_origin[0]
+                                all_data["Birth Name"] = birth_name
+                                d_o_b = name_dob_origin[1]
+                                all_data["Date of Birth"] = d_o_b
+                                origin = name_dob_origin[2] + ", " + name_dob_origin[3]
+                                all_data["Origin"] = origin
+                                
                         
                         elif "occupation" in row.th.text.lower(): # get occupations
-                            occupations = row.td.text
+                            occupations = row.td.text.split(",")
 
                         elif "work" in row.th.text.lower(): # get acheivements
                             achievements = row.td.text
@@ -92,12 +104,15 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                         elif "website" in row.th.text.lower(): # get acheivements
                             links = row.td.text
 
-            
+                elif row.td.a.img is not None:
+                    img_title = row.td.a.img['src']
+                    
+                    
             stage_name = page_soup.find("h1", {"id" : "firstHeading"}).text #find stage name from header
             
             bio = page_soup.findAll("div", {"class" : "mw-parser-output"})[0].p.text
             
-            actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, associated_actors, links, img_title)
+            actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, assoc_actors, links, img_title)
                    
             return { "actor_object": actor_object.toJSON(), "field_data_dump" : all_data}
                         
@@ -132,6 +147,5 @@ def prepare_name(name):
             else:
                 actor_name_us += "_" + name
 
-    print(actor_name_us)
     return actor_name_us
     
