@@ -11,6 +11,7 @@ def extract_names(text):
                 
                 if ' '.join(c[0] for c in chunk.leaves()) not in return_list:
                     
+                    actor = Object()
                     actor.name = ' '.join(c[0] for c in chunk.leaves())
                     actor.db_id = ""
                     
