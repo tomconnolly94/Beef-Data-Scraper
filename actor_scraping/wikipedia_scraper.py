@@ -89,7 +89,16 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                                 all_data["Date of Birth"] = d_o_b
                                 origin = name_dob_origin[1]
                                 all_data["Origin"] = origin
-                            elif len(name_dob_origin) == 3 or len(name_dob_origin) == 4:
+                                
+                            elif len(name_dob_origin) == 3:
+                                birth_name = name_dob_origin[0]
+                                all_data["Birth Name"] = birth_name
+                                d_o_b = name_dob_origin[1]
+                                all_data["Date of Birth"] = d_o_b
+                                origin = name_dob_origin[2]
+                                all_data["Origin"] = origin
+                                
+                            elif len(name_dob_origin) == 4:
                                 birth_name = name_dob_origin[0]
                                 all_data["Birth Name"] = birth_name
                                 d_o_b = name_dob_origin[1]
@@ -110,7 +119,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                             links = [row.td.text]
 
                 
-                elif row.td.a.img is not None:
+                elif row.td.a is not None and row.td.a.img is not None:
                     img_title = row.td.a.img['src']
                     
             stage_name = page_soup.find("h1", {"id" : "firstHeading"}).text #find stage name from header
