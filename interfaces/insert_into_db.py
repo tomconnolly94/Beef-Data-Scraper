@@ -28,7 +28,7 @@ def insert_if_not_exist(beef_object):
                 #"date_added" : beef_object, 
                 "event_date" : beef_object.date,
                 "highlights" : beef_object.highlights,
-                "data_sources" : beef_object.data_source,
+                "data_source" : beef_object.data_source,
                 "selected_categories" : beef_object.categories,
                 "img_title" : beef_object.img_title,
                 "media_link" : beef_object.media_link,
