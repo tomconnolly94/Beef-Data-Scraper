@@ -67,7 +67,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
             nicknames = []
             achievements = []
             
-            data_sources = op_url
+            data_source = op_url
             
             for index, row in enumerate(bio_rows):
                 
@@ -125,7 +125,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
             stage_name = page_soup.find("h1", {"id" : "firstHeading"}).text #find stage name from header
             bio = page_soup.findAll("div", {"class" : "mw-parser-output"})[0].p.text
             
-            actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_sources, assoc_actors, links, img_title)
+            actor_object = ActorObject(stage_name, birth_name, nicknames, d_o_b, occupations, origin, achievements, bio, data_source, assoc_actors, links, img_title)
                    
             return { "actor_object": actor_object.toJSON(), "field_data_dump" : all_data}
                         
