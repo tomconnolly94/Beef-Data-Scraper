@@ -25,7 +25,7 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
                 print(a["href"])
                 #beef_object = scrape_article(div.a["href"], uReq, soup, keyword_list)
                 scrape_article(a["href"], uReq, soup, keyword_list)
-            
+                break
         
         
 

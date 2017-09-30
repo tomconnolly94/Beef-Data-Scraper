@@ -10,13 +10,41 @@ def scrape_article(path, uReq, soup, keyword_list):
     sub_page_html = uReq(path).read()
     sub_page_soup = soup(sub_page_html, "html.parser")
     
-    content_tag_array = sub_page_soup.findAll("div", {"class" : "container"}) #find tags in the soup object
+    #print(sub_page_html)
     
-    print(content_tag_array)
+    content_tag_array = sub_page_soup.findAll("div", {"class" : "page-content"}) #find tags in the soup object
+    title_tag_array = sub_page_soup.findAll("div", {"class" : "page_header"}) #find tags in the soup object
+    
+    #print(content_tag_array)
+    
+    content_string = ""
+    img_link = ""
+    
+    for p in content_tag_array[0].findAll("p"):
+        
+        if p.a is None:
+            content_string += p.text
+        elif p.a.img is not None and p.a.img["src"] is not None:
+            print(p)
+            img_link = p.a.img["src"]
     
     #relevant_story = None;
     
+    date_text = sub_page_soup.find("span", {"class" : "date"}).text.replace("Posted ", "") #find tags in the soup object
+
+    actors_list = extract_names(content_string) #extract actors from content_string
+
+    highlights = extract_quotes(content_string) #extract quotes from content_string
+
+    categories = [1]
     
+    print(title_tag_array[0].h2.text)
+    print(content_string)
+    print(actors_list)
+    print(date_text)
+    print(img_link)
     
-    
+    #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
+    #beef_obj = BeefObject(title_tag_array[0].h2.text, actors_list, content_string, date_string, highlights, path, categories, img_link, media_link) #create beefObject 
+            
     #return beef_obj
