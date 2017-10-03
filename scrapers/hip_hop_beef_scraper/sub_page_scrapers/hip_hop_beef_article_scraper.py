@@ -47,6 +47,6 @@ def scrape_article(path, uReq, soup, keyword_list):
     #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
     beef_obj = BeefObject(title_tag_array[0].h2.text, actors_list, content_string, date_string, highlights, path, categories, img_link, media_link) #create beefObject 
             
-    beef_obj.print_beef()    
+    #beef_obj.print_beef()    
     
     return beef_obj

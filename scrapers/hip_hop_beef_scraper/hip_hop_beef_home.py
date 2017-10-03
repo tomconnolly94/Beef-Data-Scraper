@@ -17,6 +17,8 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
     news_tag_array = page_soup.find("div", {"class", "latest_news"})#, text=pattern) #find tags in the soup object
     news_tag_array = news_tag_array.findAll("li")#, text=pattern) #find tags in the soup object
 
+    beef_objects = []
+    
     if len(news_tag_array) > 0: #only execute if tags have been found
         
         for tag in news_tag_array:
@@ -35,7 +37,10 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
             
             if a and a["href"]:
                 beef_object = scrape_video(a["href"], uReq, soup, keyword_list)
-            
-
+                
+                if beef_object != None:
+                    beef_objects.append(beef_object)
+                    #beef_object.print_beef()
+    return beef_objects
     #dispose
     uClient.close()
