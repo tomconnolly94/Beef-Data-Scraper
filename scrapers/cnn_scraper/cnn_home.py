@@ -25,7 +25,8 @@ def scrape_cnn_home(uReq, soup, keyword_list):
             script_json = demjson.decode(result.group(1))
             
             for x in range(0, len(script_json['siblings']['articleList'])): #for each tag
-                                
+                
+                print(base_url + script_json['siblings']['articleList'][x]['uri'])
                 beef_object = scrape_article(base_url + script_json['siblings']['articleList'][x]['uri'], uReq, soup, keyword_list)
 
                 if beef_object != None:
