@@ -31,7 +31,7 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
                 if beef_object != None:
                     beef_objects.append(beef_object)
                     #beef_object.print_beef()
-                    
+    
     video_tag_array = page_soup.find("div", {"class", "items_list"})#, text=pattern) #find tags in the soup object
     video_tag_array = video_tag_array.findAll("li")#, text=pattern) #find tags in the soup object
     
@@ -47,6 +47,7 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
                 if beef_object != None:
                     beef_objects.append(beef_object)
                     #beef_object.print_beef()
+                    break;
                     
     return beef_objects
     #dispose
