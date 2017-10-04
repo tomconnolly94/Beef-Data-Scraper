@@ -20,7 +20,7 @@ def insert_loop(beef_objects):
 
     for beef_object in beef_objects:
         insert_if_not_exist(beef_object)
-
+'''
 #scraper loop
 while True:
 
@@ -30,3 +30,5 @@ while True:
     print("CNN Scraped.")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, keyword_list))
     print("HHB Scraped.")
+'''
+scrape_hip_hop_beef_home(uReq, soup, keyword_list)
