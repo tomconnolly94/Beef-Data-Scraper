@@ -9,7 +9,7 @@ def insert_if_not_exist(beef_object):
     
     while True:
         
-        print("loop entered")
+        print("DB insert started")
         print(beef_object.title)
         
         #open db connection
