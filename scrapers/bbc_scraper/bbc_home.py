@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-from scrapers.bbc_scraper.sub_page_scrapers.bbc_article_scraper import scrape_article # import article scraper
 import globals
+from interfaces.url_access.url_access import access_url
+from scrapers.bbc_scraper.sub_page_scrapers.bbc_article_scraper import scrape_article # import article scraper
 
 def scrape_bbc_home(uReq, soup, keyword_list):
     
     base_url = 'http://www.bbc.co.uk' #url to scrape
     init_path = "/news" #base url extension
     
-    uClient = uReq(base_url + init_path)#make request for page
-    page_html = uClient.read() #extract html data from request object
+    page_html = access_url(base_url + init_path, uReq)#make request for page
 
     page_soup = soup(page_html, "html.parser") #convert the html to a soup object
     raw_html = page_soup.findAll("div", {"class" : "gs-c-promo"}) #find tags in the soup object
