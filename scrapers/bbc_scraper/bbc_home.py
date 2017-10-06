@@ -9,36 +9,37 @@ def scrape_bbc_home(uReq, soup, keyword_list):
     init_path = "/news" #base url extension
     
     page_html = access_url(base_url + init_path, uReq)#make request for page
+    
+    if page_html is not None:
+    
+        page_soup = soup(page_html, "html.parser") #convert the html to a soup object
+        tag_array = page_soup.findAll("div", {"class" : "gs-c-promo"}) #find tags in the soup object
 
-    page_soup = soup(page_html, "html.parser") #convert the html to a soup object
-    raw_html = page_soup.findAll("div", {"class" : "gs-c-promo"}) #find tags in the soup object
+        if len(tag_array) > 0: #only execute if tags have been found
 
-    if len(raw_html) > 0: #only execute if tags have been found
+            beef_objects = []
 
-        beef_objects = []
-        
-        for x in range(0, len(raw_html)): #for each tag
+            for x in range(0, len(tag_array)): #for each tag
 
-            if(raw_html[x].a): #ensure the element has an anchor tag
+                if(tag_array[x].a): #ensure the element has an anchor tag
 
-                if("http://" in raw_html[x].a["href"]): #check if the a href is an absolute url or an absolute path
-                    sub_page_url = raw_html[x].a["href"]
+                    if("http://" in tag_array[x].a["href"]): #check if the a href is an absolute url or an absolute path
+                        sub_page_url = tag_array[x].a["href"]
 
-                else:
-                    sub_page_url = base_url + raw_html[x].a["href"]
-                    
-                path_split_1 = sub_page_url.split("/")#split path by /
-                path_split_2 = path_split_1[len(path_split_1) - 1 ].split("-")#get final field in path_split_1 and split by -
-                
-                if path_split_2[0] != "blogs": #ensure we are not scraping a blog page
+                    else:
+                        sub_page_url = base_url + tag_array[x].a["href"]
 
-                    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
+                    path_split_1 = sub_page_url.split("/")#split path by /
+                    path_split_2 = path_split_1[len(path_split_1) - 1 ].split("-")#get final field in path_split_1 and split by -
 
-                    if beef_object != None:
-                        beef_objects.append(beef_object)
-                        #beef_object.print_beef()
+                    if path_split_2[0] != "blogs": #ensure we are not scraping a blog page
 
-        return beef_objects
+                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
 
-    #dispose
-    uClient.close()
+                        if beef_object != None:
+                            beef_objects.append(beef_object)
+                            #beef_object.print_beef()
+
+            return beef_objects
+    else:
+        return []

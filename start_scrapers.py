@@ -15,7 +15,6 @@ keyword_list = ()
 
 file_name = "title_record.txt"
 
-
 def insert_loop(beef_objects):
 
     for beef_object in beef_objects:
@@ -24,11 +23,16 @@ def insert_loop(beef_objects):
 #scraper loop
 while True:
     
+    for path in list(globals.blacklisted_urls): #loop through blacklist, decrease timeout counts and remove the paths with timeout counts at 0
+        
+        if globals.blacklisted_urls[path] == 0:
+            del globals.blacklisted_urls[path]
+        else:
+            globals.blacklisted_urls[path] = globals.blacklisted_urls[path] - 1
+    
     insert_loop(scrape_bbc_home(uReq, soup, keyword_list))
     print("BBC Scraped.")
     insert_loop(scrape_cnn_home(uReq, soup, keyword_list))
     print("CNN Scraped.")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, keyword_list))
     print("HHB Scraped.")
-
-#scrape_hip_hop_beef_home(uReq, soup, keyword_list)
