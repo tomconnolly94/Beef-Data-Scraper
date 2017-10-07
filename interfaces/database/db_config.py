@@ -9,7 +9,7 @@ def open_db_connection():
     MONGO_PASS = "6YdmYtA+dH7LHBg4+Dn0EyUPYSKsjxz5fmvVuxSmKbW/rGH8QH+96JiY33e0tBw7"
     MONGO_PORT = 41937
 
-    db_connection = pymongo.MongoClient(MONGO_HOST, MONGO_PORT) # server.local_bind_port is assigned local port
+    db_connection = pymongo.MongoClient(MONGO_HOST, MONGO_PORT, connect=Frue) # server.local_bind_port is assigned local port
     db = db_connection[MONGO_DB]
     db.authenticate(MONGO_USER, MONGO_PASS)
     
