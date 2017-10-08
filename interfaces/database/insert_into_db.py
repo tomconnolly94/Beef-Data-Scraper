@@ -8,21 +8,23 @@ def insert_if_not_exist(beef_object):
     
     while True:
         
-        print("DB insert attempt started for: ")
-        print(beef_object.title)
+        logging = None
+        
+        if logging:
+            print("DB insert attempt started for: " + beef_object.title)
         
         #open db connection
         db = open_db_connection()
 
-        results = db.scraped_training_events_dump_v0_1.find({ "title" : beef_object.title })
+        results_current_events = db.scraped_training_events_dump_v0_1.find({ "title" : beef_object.title })
+        results_historic_events = db.all_scraped_events.find({ "title" : beef_object.title })
 
-        if results.count() < 1:
+        if results_current_events.count() < 1 and results_historic_events.count() < 1:
 
             document = ({
                 "title" : beef_object.title,
                 "relevant_actors" : beef_object.relevant_actors, 
                 "description" : beef_object.content,
-                #"date_added" : beef_object, 
                 "event_date" : beef_object.date,
                 "highlights" : beef_object.highlights,
                 "data_source" : beef_object.data_source,
@@ -30,17 +32,37 @@ def insert_if_not_exist(beef_object):
                 "img_title" : beef_object.img_title,
                 "media_link" : beef_object.media_link,
             })
+            
+            document_min = ({
+                "title" : beef_object.title
+            })
 
             try:
                 db.scraped_training_events_dump_v0_1.insert(document)
                 
             except ConnectionFailure:
-                print("Pymongo error, retrying db connection...")
+                if logging:
+                    print("Pymongo error, retrying db connection...")
                 
             else: #execute if "try" block is successful
-                print("Record inserted.")
-                break       
+                if logging:
+                    print("Record inserted into main scraping table.")
+                
+                try:
+                    db.all_scraped_events.insert(document_min)
+
+                except ConnectionFailure:
+                    
+                    if logging:
+                        print("Pymongo error, retrying db connection...")
+
+                else: #execute if "try" block is successful
+                    
+                    if logging:
+                        print("Record inserted into historic scraped events table.")
+                    break     
         
         else:
-            print("Record already exists.")
+            if logging:
+                print("Record already exists.")
             break #break loop because record already exists

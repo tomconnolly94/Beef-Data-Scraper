@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 #imports
+import sys
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 from scrapers.bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
@@ -19,7 +20,7 @@ def insert_loop(beef_objects):
 
     for beef_object in beef_objects:
         insert_if_not_exist(beef_object)
-
+        
 #scraper loop
 while True:
     
@@ -30,9 +31,12 @@ while True:
         else:
             globals.blacklisted_urls[path] = globals.blacklisted_urls[path] - 1
     
+    print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, keyword_list))
     print("BBC Scraped.")
+    print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, keyword_list))
     print("CNN Scraped.")
+    print("Scraping HHB...")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, keyword_list))
-    print("HHB Scraped.")
+    print("HHB Scraped")
