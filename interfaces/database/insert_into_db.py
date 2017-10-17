@@ -3,6 +3,7 @@
 from interfaces.database.db_config import open_db_connection
 import time
 from objects.beef_object import BeefObject
+import pymongo
 
 def insert_if_not_exist(beef_object):
     
@@ -43,7 +44,11 @@ def insert_if_not_exist(beef_object):
             except ConnectionFailure:
                 if logging:
                     print("Pymongo error, retrying db connection...")
-                
+            except pymongo.errors.NetworkTimeout:
+                print("PYMONGO NETWORK TIMEOUT")
+                print("######################################################")
+                raise
+            
             else: #execute if "try" block is successful
                 if logging:
                     print("Record inserted into main scraping table.")
