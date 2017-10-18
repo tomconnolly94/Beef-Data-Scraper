@@ -2,6 +2,7 @@
 #imports
 import sys
 import urllib
+import re
 import pprint
 pp = pprint.PrettyPrinter(indent=4)
 from objects.actor_object import ActorObject
@@ -85,7 +86,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                             name_dob_origin = row.td.text.split("\n")
 
                             if len(name_dob_origin) == 2:
-                                d_o_b = name_dob_origin[0]
+                                d_o_b = interpret_date(name_dob_origin[0])
                                 all_data["Date of Birth"] = d_o_b
                                 origin = name_dob_origin[1]
                                 all_data["Origin"] = origin
@@ -93,7 +94,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                             elif len(name_dob_origin) == 3:
                                 birth_name = name_dob_origin[0]
                                 all_data["Birth Name"] = birth_name
-                                d_o_b = name_dob_origin[1]
+                                d_o_b = interpret_date(name_dob_origin[1])
                                 all_data["Date of Birth"] = d_o_b
                                 origin = name_dob_origin[2]
                                 all_data["Origin"] = origin
@@ -101,7 +102,7 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                             elif len(name_dob_origin) == 4:
                                 birth_name = name_dob_origin[0]
                                 all_data["Birth Name"] = birth_name
-                                d_o_b = name_dob_origin[1]
+                                d_o_b = interpret_date(name_dob_origin[1])
                                 all_data["Date of Birth"] = d_o_b
                                 origin = name_dob_origin[2] + ", " + name_dob_origin[3]
                                 all_data["Origin"] = origin
@@ -164,4 +165,15 @@ def prepare_name(name):
             actor_name_us += "_" + name
             
     return actor_name_us
+    
+# function: take a date and attempt to format it in a way the beeftracker server will understand
+def interpret_date(date):
+    
+    date_extract = re.findall('\((.*?)\)', date)
+    
+    date_split = date_extract[0].split("-")
+    
+    date_return = date_split[2] + "/" + date_split[1] + "/" + date_split[0]
+    
+    return date_return
     
