@@ -1,21 +1,37 @@
 Scraping BBC...
+BBC Scraped.
+Scraping CNN...
 Traceback (most recent call last):
-  File "beeftracker_scraping/start_scrapers.py", line 35, in <module>
-    insert_loop(scrape_bbc_home(uReq, soup, keyword_list))
-  File "/home/tom/beeftracker/news_scraping_project/beeftracker_scraping/scrapers/bbc_scraper/bbc_home.py", line 37, in scrape_bbc_home
-    beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list) #scrape this article
-  File "/home/tom/beeftracker/news_scraping_project/beeftracker_scraping/scrapers/bbc_scraper/sub_page_scrapers/bbc_article_scraper.py", line 16, in scrape_article
-    sub_page_soup = soup(sub_page_html, "html.parser")
-  File "/usr/local/lib/python3.5/dist-packages/bs4/__init__.py", line 228, in __init__
-    self._feed()
-  File "/usr/local/lib/python3.5/dist-packages/bs4/__init__.py", line 289, in _feed
-    self.builder.feed(self.markup)
-  File "/usr/local/lib/python3.5/dist-packages/bs4/builder/_htmlparser.py", line 215, in feed
-    parser.feed(markup)
-  File "/usr/lib/python3.5/html/parser.py", line 111, in feed
-    self.goahead(0)
-  File "/usr/lib/python3.5/html/parser.py", line 171, in goahead
-    k = self.parse_starttag(i)
-  File "/usr/lib/python3.5/html/parser.py", line 341, in parse_starttag
-    if end.endswith('/>'):
+  File "beeftracker_scraping/start_scrapers.py", line 38, in <module>
+    insert_loop(scrape_cnn_home(uReq, soup, keyword_list))
+  File "beeftracker_scraping/start_scrapers.py", line 22, in insert_loop
+    insert_if_not_exist(beef_object)
+  File "/home/tom/beeftracker/news_scraping_project/beeftracker_scraping/interfaces/database/insert_into_db.py", line 17, in insert_if_not_exist
+    db = open_db_connection()
+  File "/home/tom/beeftracker/news_scraping_project/beeftracker_scraping/interfaces/database/db_config.py", line 14, in open_db_connection
+    db.authenticate(MONGO_USER, MONGO_PASS)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/database.py", line 1075, in authenticate
+    connect=True)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/mongo_client.py", line 547, in _cache_credentials
+    sock_info.authenticate(credentials)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/pool.py", line 581, in authenticate
+    auth.authenticate(credentials, self)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/auth.py", line 486, in authenticate
+    auth_func(credentials, sock_info)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/auth.py", line 466, in _authenticate_default
+    return _authenticate_scram_sha1(credentials, sock_info)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/auth.py", line 237, in _authenticate_scram_sha1
+    res = sock_info.command(source, cmd)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/pool.py", line 482, in command
+    self._raise_connection_failure(error)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/pool.py", line 610, in _raise_connection_failure
+    raise error
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/pool.py", line 477, in command
+    collation=collation)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/network.py", line 108, in command
+    response = receive_message(sock, 1, request_id)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/network.py", line 137, in receive_message
+    header = _receive_data_on_socket(sock, 16)
+  File "/usr/local/lib/python3.5/dist-packages/pymongo/network.py", line 164, in _receive_data_on_socket
+    chunk = sock.recv(length)
 KeyboardInterrupt
