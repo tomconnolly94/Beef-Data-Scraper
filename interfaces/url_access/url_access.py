@@ -1,5 +1,5 @@
 #imports
-import urllib
+import urllib.request as urllib
 import globals
 
 def access_url(path, uReq):
@@ -9,14 +9,22 @@ def access_url(path, uReq):
     if path not in globals.blacklisted_urls: #check path is not blacklisted
     
         try:
-
-            page_html = uReq(path).read() #request url
+            hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                    'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+                    'Accept-Encoding': 'none',
+                    'Accept-Language': 'en-US,en;q=0.8',
+                    'Connection': 'keep-alive'}
+            
+            req = urllib.Request(path, headers=hdr)
+            page_html = uReq(req).read() #request url
             
         except urllib.error.URLError: #handle any access errors, sometimes caused by too many requests to a domain
 
             print("URLError thrown, handling initiated.")
             print("##############################################################################")
             globals.blacklisted_urls[path] = 20 #add path to dictionary and wait 20 loops before requesting it again
+            raise
             return None
 
         else:
