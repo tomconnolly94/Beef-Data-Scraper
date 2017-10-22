@@ -49,6 +49,11 @@ def insert_if_not_exist(beef_object):
                 print("######################################################")
                 raise
             
+            except pymongo.errors.AutoReconnect:
+                print("PYMONGO AUTO RECONNECT")
+                print("######################################################")
+                raise
+            
             else: #execute if "try" block is successful
                 if logging:
                     print("Record inserted into main scraping table.")
