@@ -11,8 +11,8 @@ import globals #import globals file
 
 globals.init()
 
-#keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls", "Hurricane")
-keyword_list = ()
+keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls", "Hurricane")
+#keyword_list = ()
 
 file_name = "title_record.txt"
 
