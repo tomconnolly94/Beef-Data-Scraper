@@ -77,9 +77,28 @@ def scrape_article(path, uReq, soup, keyword_list):
                     elif img_tag_array[0].img:
                         img_link = img_tag_array[0].img["src"]
 
+                media_link = ""
+
+                if len(media_link) > 0:
+                    link = media_tag_aray[0]["src"]
+                    link_type = ""
+
+                    if "youtube" in link:
+                        link_type = "youtube"
+                    elif "spotify" in link:
+                        link_type = "spotify"
+                    elif "soundcloud" in link:
+                        link_type = "soundcloud"
+                    elif "twitter" in link:
+                        link_type = "twitter"
+
+                    media_link = {
+                        "link": link,
+                        "type": link_type 
+                    }
 
                 #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
-                beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, path, categories, img_link, "") #create beefObject
+                beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, path, categories, img_link, media_link) #create beefObject
 
                 return beef_obj
     else:

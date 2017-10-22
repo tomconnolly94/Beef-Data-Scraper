@@ -69,6 +69,25 @@ def scrape_article(path, uReq, soup, keyword_list):
                     img_link = media_tag_array[0].div.img['data-src-large']
 
                 media_link = ""
+
+                if len(media_link) > 0:
+                    link = media_tag_aray[0]["src"]
+                    link_type = ""
+
+                    if "youtube" in link:
+                        link_type = "youtube"
+                    elif "spotify" in link:
+                        link_type = "spotify"
+                    elif "soundcloud" in link:
+                        link_type = "soundcloud"
+                    elif "twitter" in link:
+                        link_type = "twitter"
+
+                    media_link = {
+                        "link": link,
+                        "type": link_type 
+                    }
+
                 
                 '''
                 if len(media_tag_array) > 0 and media_tag_array[0].div.video: #if article contains references to images, extract the first one

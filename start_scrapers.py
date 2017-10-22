@@ -21,7 +21,7 @@ def insert_loop(beef_objects):
 
     for beef_object in beef_objects:
         insert_if_not_exist(beef_object)
-'''        
+
 #scraper loop
 while True:
     
@@ -35,12 +35,15 @@ while True:
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, keyword_list))
     print("BBC Scraped.")
+    
     print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, keyword_list))
     print("CNN Scraped.")
+    
     print("Scraping HHB...")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, keyword_list))
     print("HHB Scraped")
-'''
-
-scrape_hiphopdx_home(uReq, soup, keyword_list)
+    
+    print("Scraping HHDX...")
+    insert_loop(scrape_hiphopdx_home(uReq, soup, keyword_list))
+    print("HHDX Scraped")
