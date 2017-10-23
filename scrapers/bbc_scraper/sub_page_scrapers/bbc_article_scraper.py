@@ -10,7 +10,7 @@ from text_extraction.extract_quotes import extract_quotes
 def scrape_article(path, uReq, soup, keyword_list):
     
     sub_page_html = access_url(path, uReq)
-    
+        
     if sub_page_html is not None:
 
         sub_page_soup = soup(sub_page_html, "html.parser")
@@ -78,9 +78,14 @@ def scrape_article(path, uReq, soup, keyword_list):
                         img_link = img_tag_array[0].img["src"]
 
                 media_link = ""
-
-                if len(media_link) > 0:
-                    link = media_tag_aray[0]["src"]
+                
+                media_tag_array = sub_page_soup.findAll("figure", {"class" : "media-player"})
+                                
+                if len(media_tag_array) == 1:
+                    link_json = demjson.decode(media_tag_array[0]["data-playable"])
+                    
+                    link = link_json["settings"]["externalEmbedUrl"]
+                
                     link_type = ""
 
                     if "youtube" in link:
@@ -91,6 +96,8 @@ def scrape_article(path, uReq, soup, keyword_list):
                         link_type = "soundcloud"
                     elif "twitter" in link:
                         link_type = "twitter"
+                    elif "bbc" in link:
+                        link_type = "bbc_embed"
 
                     media_link = {
                         "link": link,

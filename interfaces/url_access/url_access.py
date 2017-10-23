@@ -1,5 +1,6 @@
 #imports
-import urllib.request as urllib
+import urllib.request as urllib_req
+import urllib
 import globals
 
 def access_url(path, uReq):
@@ -16,7 +17,7 @@ def access_url(path, uReq):
                     'Accept-Language': 'en-US,en;q=0.8',
                     'Connection': 'keep-alive'}
             
-            req = urllib.Request(path, headers=hdr)
+            req = urllib_req.Request(path, headers=hdr)
             page_html = uReq(req).read() #request url
             
         except urllib.error.URLError: #handle any access errors, sometimes caused by too many requests to a domain

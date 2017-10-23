@@ -42,10 +42,10 @@ def scrape_article(path, uReq, soup, keyword_list):
         #relevant_story = None;
         
         date_string = header_tag.find("div", {"class" : "date"}).text.replace("\n", "") #find tags in the soup object
-        date_split = date_string.split(", ") #split to get month and day in slot [0] and year and rest of string in [1]
+        date_split = date_string.lstrip().split(", ") #split to get month and day in slot [0] and year and rest of string in [1]
         secondary_date_split = date_split[0].split(" ") #split to seperate month and day
-        tertiary_date_split = date_split[1].split(" ")
-        
+        tertiary_date_split = date_split[1].split(" ") #split to seperate year from rest of string
+                
         final_date_string = str(secondary_date_split[1]) + "/" + str(globals.get_month_number(secondary_date_split[0])) + "/" + str(tertiary_date_split[0])
         
         actors_list = extract_names(content_string) #extract actors from content_string

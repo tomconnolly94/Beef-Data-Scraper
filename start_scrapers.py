@@ -18,6 +18,8 @@ keyword_list = ()
 file_name = "title_record.txt"
 
 def insert_loop(beef_objects):
+    
+    print("Events Scraped: " + str(len(beef_objects)))
 
     for beef_object in beef_objects:
         insert_if_not_exist(beef_object)
@@ -47,3 +49,4 @@ while True:
     print("Scraping HHDX...")
     insert_loop(scrape_hiphopdx_home(uReq, soup, keyword_list))
     print("HHDX Scraped")
+    
