@@ -41,7 +41,10 @@ def scrape_article(path, uReq, soup, keyword_list):
         highlights = extract_quotes(content_string) #extract quotes from content_string
         categories = [1]
 
-        media_link = ""
+        media_link = {
+            "link": "",
+            "type": ""                    
+        }
 
         if len(media_tag_aray) > 0:
             link = media_tag_aray[0]["src"]

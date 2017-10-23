@@ -55,7 +55,11 @@ def scrape_article(path, uReq, soup, keyword_list):
         link_raw = body_tag.findAll("iframe")
         link = ""
         link_type = ""
-        
+        media_link = {
+            "link": "",
+            "type": "" 
+        }
+
         if len(link_raw) > 0:
             link = link_raw[0]["src"]
 
@@ -68,10 +72,10 @@ def scrape_article(path, uReq, soup, keyword_list):
             elif "twitter" in link:
                 link_type = "twitter"
 
-        media_link = {
-            "link": link,
-            "type": link_type 
-        }
+            media_link = {
+                "link": link,
+                "type": link_type 
+            }
 
         #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
         beef_obj = BeefObject(title, actors_list, content_string, final_date_string, highlights, path, categories, img_link, media_link) #create beefObject 

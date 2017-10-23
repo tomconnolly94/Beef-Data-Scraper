@@ -22,10 +22,8 @@ def access_url(path, uReq):
             
         except urllib.error.URLError: #handle any access errors, sometimes caused by too many requests to a domain
 
-            print("URLError thrown, handling initiated.")
-            print("##############################################################################")
+            print("URLError thrown. Adding " + path + " to blacklist.")
             globals.blacklisted_urls[path] = 20 #add path to dictionary and wait 20 loops before requesting it again
-            raise
             return None
 
         else:

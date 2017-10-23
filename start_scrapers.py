@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 #imports
 import sys
+import time
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 from scrapers.bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
@@ -20,9 +21,14 @@ file_name = "title_record.txt"
 def insert_loop(beef_objects):
     
     print("Events Scraped: " + str(len(beef_objects)))
+    insert_count = 0
 
     for beef_object in beef_objects:
-        insert_if_not_exist(beef_object)
+        if insert_if_not_exist(beef_object):
+            insert_count += 1
+        
+        
+    print("Events Inserted: " + str(insert_count))
 
 #scraper loop
 while True:
@@ -50,3 +56,7 @@ while True:
     insert_loop(scrape_hiphopdx_home(uReq, soup, keyword_list))
     print("HHDX Scraped")
     
+    sleep_secs = 30
+    
+    print("Sleeping for " + str(sleep_secs) + " seconds")
+    time.sleep(sleep_secs)

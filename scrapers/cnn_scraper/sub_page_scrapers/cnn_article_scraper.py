@@ -68,7 +68,10 @@ def scrape_article(path, uReq, soup, keyword_list):
                 if (media_tag_array is not None) and (len(media_tag_array) > 0) and (media_tag_array[0].div) and (media_tag_array[0].div.img) and (media_tag_array[0].div.img['data-src-large']): #if article contains references to images, extract the first one
                     img_link = media_tag_array[0].div.img['data-src-large']
 
-                media_link = ""
+                media_link = {
+                    "link": "",
+                    "type": ""                    
+                }
 
                 if len(media_link) > 0:
                     link = media_tag_aray[0]["src"]

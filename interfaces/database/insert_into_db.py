@@ -70,9 +70,9 @@ def insert_if_not_exist(beef_object):
                     
                     if logging:
                         print("Record inserted into historic scraped events table.")
-                    break     
+                    return True    
         
         else:
             if logging:
                 print("Record already exists.")
-            break #break loop because record already exists
+            return None #break loop because record already exists

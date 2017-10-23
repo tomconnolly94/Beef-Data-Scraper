@@ -77,7 +77,10 @@ def scrape_article(path, uReq, soup, keyword_list):
                     elif img_tag_array[0].img:
                         img_link = img_tag_array[0].img["src"]
 
-                media_link = ""
+                media_link = {
+                    "link": "",
+                    "type": ""                    
+                }
                 
                 media_tag_array = sub_page_soup.findAll("figure", {"class" : "media-player"})
                                 
