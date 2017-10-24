@@ -10,7 +10,7 @@ from text_extraction.extract_quotes import extract_quotes
 def scrape_article(path, uReq, soup, keyword_list):
     
     sub_page_html = access_url(path, uReq)
-    
+        
     if sub_page_html is not None:
 
         sub_page_soup = soup(sub_page_html, "html.parser")
@@ -42,13 +42,9 @@ def scrape_article(path, uReq, soup, keyword_list):
                     content_string += p.text + " "
 
                 title_tag_array = sub_page_soup.findAll("h1", {"class" : "story-body__h1"}) #find tags in the soup object for beef object title //TODO
-
                 mini_info_panel_tag_array = sub_page_soup.findAll("li", {"class" : "mini-info-list__item"})#find tags in the soup object for beef object date //TODO
-
                 date_string = mini_info_panel_tag_array[0].div["data-datetime"] #format date //TODO
-
                 actors_list = extract_names(content_string) #extract actors from content_string
-
                 highlights = extract_quotes(content_string) #extract quotes from content_string
 
                 categories = []
@@ -56,7 +52,6 @@ def scrape_article(path, uReq, soup, keyword_list):
                 if len(mini_info_panel_tag_array) > 1:
 
                     category = mini_info_panel_tag_array[1].a.text
-
 
                     if "Politics" in category:
                         categories.append(2)
@@ -77,9 +72,38 @@ def scrape_article(path, uReq, soup, keyword_list):
                     elif img_tag_array[0].img:
                         img_link = img_tag_array[0].img["src"]
 
+                media_link = {
+                    "link": "",
+                    "type": ""                    
+                }
+                
+                media_tag_array = sub_page_soup.findAll("figure", {"class" : "media-player"})
+                                
+                if len(media_tag_array) == 1:
+                    link_json = demjson.decode(media_tag_array[0]["data-playable"])
+                    
+                    link = link_json["settings"]["externalEmbedUrl"]
+                
+                    link_type = ""
+
+                    if "youtube" in link:
+                        link_type = "youtube"
+                    elif "spotify" in link:
+                        link_type = "spotify"
+                    elif "soundcloud" in link:
+                        link_type = "soundcloud"
+                    elif "twitter" in link:
+                        link_type = "twitter"
+                    elif "bbc" in link:
+                        link_type = "bbc_embed"
+
+                    media_link = {
+                        "link": link,
+                        "type": link_type 
+                    }
 
                 #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
-                beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, path, categories, img_link, "") #create beefObject
+                beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, path, categories, img_link, media_link) #create beefObject
 
                 return beef_obj
     else:
