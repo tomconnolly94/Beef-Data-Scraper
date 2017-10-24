@@ -14,12 +14,7 @@ from scrapers.hip_hop_beef_scraper.hip_hop_beef_home import scrape_hip_hop_beef_
 from scrapers.hiphopdx_scraper.hiphopdx_home import scrape_hiphopdx_home # import hip hop dx home scraper
 from scrapers.hot_new_hip_hop_scraper.hot_new_hip_hop_home import scrape_hot_new_hip_hop_home # import hip hop dx home scraper
 
-<<<<<<< HEAD
-keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-argument", "argue", "communications", "feud", "calls", "Hurricane")
-#keyword_list = ()
-=======
 globals.init() #initiate globals
->>>>>>> develop
 
 #define keyword lists for scrapers to use
 keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter", "argument", "argue", "communications", "feud", "calls", "Hurricane")
