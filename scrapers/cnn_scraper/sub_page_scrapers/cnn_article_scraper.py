@@ -61,20 +61,24 @@ def scrape_article(path, uReq, soup, keyword_list):
                 if "technology" in path:
                     categories.append(6)
 
-                media_tag_array = sub_page_soup.findAll("div", {"class" : "el__image--fullwidth"}) #find tags in the soup object
+                img_tag_array = sub_page_soup.findAll("div", {"class" : "el__image--fullwidth"}) #find tags in the soup object
 
                 img_link = ""
 
-                if (media_tag_array is not None) and (len(media_tag_array) > 0) and (media_tag_array[0].div) and (media_tag_array[0].div.img) and (media_tag_array[0].div.img['data-src-large']): #if article contains references to images, extract the first one
-                    img_link = media_tag_array[0].div.img['data-src-large']
+                if (img_tag_array is not None) and (len(img_tag_array) > 0) and (img_tag_array[0].div) and (img_tag_array[0].div.img) and (img_tag_array[0].div.img['data-src-large']): #if article contains references to images, extract the first one
+                    img_link = img_tag_array[0].div.img['data-src-large']
 
+                media_tag_array = sub_page_soup.findAll("div", {"class" : "media__video--thumbnail-wrapper"}) #find tags in the soup object
+                    
                 media_link = {
                     "link": "",
                     "type": ""                    
                 }
-
-                if len(media_tag_aray) > 0:
-                    link = media_tag_aray[0]["src"]
+                
+                if len(media_tag_array) > 0 and media_tag_array[0] and media_tag_array[0].script and media_tag_array[0].script.text:
+                    
+                    json_video_data = demjson.decode(media_tag_array[0].script.text)
+                    link = json_video_data["embedUrl"]
                     link_type = ""
 
                     if "youtube" in link:
@@ -83,22 +87,12 @@ def scrape_article(path, uReq, soup, keyword_list):
                         link_type = "spotify"
                     elif "soundcloud" in link:
                         link_type = "soundcloud"
-                    elif "twitter" in link:
-                        link_type = "twitter"
 
                     media_link = {
                         "link": link,
                         "type": link_type 
                     }
-
                 
-                '''
-                if len(media_tag_array) > 0 and media_tag_array[0].div.video: #if article contains references to images, extract the first one
-                    script_text = tag_array[10].text
-                    result = re.search('CNN.contentModel = (.*);', script_text)
-                    script_json = demjson.decode(result.group(1))
-                    media_link = media_tag_array[0].div.video['data-src-large']
-                '''
                 #frame BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
                 beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, path, categories, img_link, media_link) #create beefObject 
 
