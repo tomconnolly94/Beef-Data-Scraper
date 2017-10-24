@@ -23,7 +23,7 @@ def scrape_article(path, uReq, soup, keyword_list):
         for p in body_tag.section.findAll('p'):
             
             if p is not None and len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
-                print(p.text)
+
                 #check if any text from page contains key words stored in list, if keyword found, print page text
                 if(any(keyword in p.text for keyword in keyword_list)):
                     relevant_story = True
@@ -31,8 +31,9 @@ def scrape_article(path, uReq, soup, keyword_list):
 
             else:
                 relevant_story = True
+                
+        #TODO: Code above this point works, deve required below
 
-        print(relevant_story)
         #article is relevant, build a beef record
         if(relevant_story): #execute if a story contains a keyword
 
