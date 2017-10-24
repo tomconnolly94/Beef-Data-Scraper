@@ -35,4 +35,5 @@ def scrape_hot_new_hip_hop_home(uReq, soup, keyword_list):
 
         return beef_objects
     else:
-        return []    
+        return []
+    
