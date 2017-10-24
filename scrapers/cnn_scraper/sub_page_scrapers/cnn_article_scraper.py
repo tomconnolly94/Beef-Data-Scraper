@@ -73,7 +73,7 @@ def scrape_article(path, uReq, soup, keyword_list):
                     "type": ""                    
                 }
 
-                if len(media_link) > 0:
+                if len(media_tag_aray) > 0:
                     link = media_tag_aray[0]["src"]
                     link_type = ""
 
