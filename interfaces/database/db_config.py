@@ -10,7 +10,12 @@ def open_db_connection():
     MONGO_PORT = 41937
 
     db_connection = pymongo.MongoClient(MONGO_HOST, MONGO_PORT, connect=False) # server.local_bind_port is assigned local port
-    db = db_connection[MONGO_DB]
-    db.authenticate(MONGO_USER, MONGO_PASS)
     
-    return db
+    try:
+        db = db_connection[MONGO_DB]
+        db.authenticate(MONGO_USER, MONGO_PASS)
+    except pymongo.errors.AutoReconnect:
+        print("PYMONGO AUTH AUTO RECONNECT")
+        print("######################################################")        
+    else:
+        return db

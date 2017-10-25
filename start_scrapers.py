@@ -49,7 +49,7 @@ while True:
     print("Hip Hop DX Scraped")
     
     print("Scraping Hot New Hip Hop...")
-    insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, keyword_list))
+    insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, empty_keyword_list))
     print("Hot New Hip Hop Scraped")
     
     
