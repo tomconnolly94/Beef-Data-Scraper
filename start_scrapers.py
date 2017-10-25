@@ -47,11 +47,11 @@ while True:
     print("Scraping Hip Hop DX...")
     insert_loop(scrape_hiphopdx_home(uReq, soup, empty_keyword_list))
     print("Hip Hop DX Scraped")
-    '''
+    
     print("Scraping Hot New Hip Hop...")
     insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, keyword_list))
     print("Hot New Hip Hop Scraped")
-    '''
+    
     
     #initiate hold sequence to prevent over-scraping
     sleep_secs = 180

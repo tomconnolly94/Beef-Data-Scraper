@@ -10,7 +10,7 @@ from text_extraction.extract_quotes import extract_quotes
 def scrape_article(path, uReq, soup, keyword_list):
     
     sub_page_html = access_url(path, uReq)
-        
+    
     if sub_page_html is not None:
             
         sub_page_soup = soup(sub_page_html, "html.parser")
@@ -18,9 +18,9 @@ def scrape_article(path, uReq, soup, keyword_list):
         body_tag = sub_page_soup.find("div", {"class" : "article-content-container"}) #find tags in the soup object
         
         relevant_story = None;
-        print(body_tag.section.findAll('p'))
+        
         #check each p tag found for words from the keyword list
-        for p in body_tag.section.findAll('p'):
+        for p in body_tag.section.findAll("p"):
             
             if p is not None and len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
 
@@ -31,42 +31,34 @@ def scrape_article(path, uReq, soup, keyword_list):
 
             else:
                 relevant_story = True
-                
-        #TODO: Code above this point works, deve required below
 
         #article is relevant, build a beef record
         if(relevant_story): #execute if a story contains a keyword
 
-            header_tag = sub_page_soup.find("div", {"class" : "article-header"}) #find tags in the soup object
-
-            if header_tag and header_tag.div and header_tag.div.h1 and header_tag.div.text:
-                title = header_tag.div.h1.text
-            else:
-                print(header_tag)
+            if body_tag.h2 and body_tag.h2.text:
+                title = body_tag.h2.text.strip()
 
             content_string = ""
 
-            for p in body_tag.findAll("p"):
+            for p in body_tag.section.findAll("p"):
 
                 if p is not None:
                     content_string += p.text
 
-            header_divs = header_tag.findAll("div")
+            img_tag_array = sub_page_soup.findAll("img", { "class", "article-gallery-cover"})
 
-            img_link = ""
-
-            if header_divs[3].img:
-                img_link = header_divs[3].img["src"]
+            if len(img_tag_array) > 0 and img_tag_array[0]["src"]:
+                img_link = img_tag_array[0]["src"]
 
             #relevant_story = None;
 
-            date_string = header_tag.find("div", {"class" : "date"}).text.replace("\n", "") #find tags in the soup object
+            date_string = sub_page_soup.find("div", {"class" : "editorBlock-date"}).text.replace("\n", "") #find tags in the soup object
             date_split = date_string.lstrip().split(", ") #split to get month and day in slot [0] and year and rest of string in [1]
             secondary_date_split = date_split[0].split(" ") #split to seperate month and day
             tertiary_date_split = date_split[1].split(" ") #split to seperate year from rest of string
 
             final_date_string = str(secondary_date_split[1]) + "/" + str(globals.get_month_number(secondary_date_split[0])) + "/" + str(tertiary_date_split[0])
-
+            
             actors_list = extract_names(content_string) #extract actors from content_string
             highlights = extract_quotes(content_string) #extract quotes from content_string
             categories = [1]
@@ -90,7 +82,9 @@ def scrape_article(path, uReq, soup, keyword_list):
                     link_type = "soundcloud"
                 elif "twitter" in link:
                     link_type = "twitter"
-
+                else:
+                    link_type = "video_embed"
+                    
                 media_link = {
                     "link": link,
                     "type": link_type 
