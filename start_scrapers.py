@@ -31,7 +31,7 @@ while True:
             globals.blacklisted_urls[path] = globals.blacklisted_urls[path] - 1
     
     #start scraping
-    '''
+    
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, keyword_list))
     print("BBC Scraped.")
@@ -51,10 +51,10 @@ while True:
     print("Scraping Hot New Hip Hop...")
     insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, keyword_list))
     print("Hot New Hip Hop Scraped")
-    
+    '''
     
     #initiate hold sequence to prevent over-scraping
-    sleep_secs = 30
+    sleep_secs = 180
     
     print("Sleeping for " + str(sleep_secs) + " seconds")
     time.sleep(sleep_secs)
