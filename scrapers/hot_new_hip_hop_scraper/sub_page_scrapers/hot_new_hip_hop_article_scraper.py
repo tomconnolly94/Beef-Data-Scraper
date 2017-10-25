@@ -10,19 +10,19 @@ from text_extraction.extract_quotes import extract_quotes
 def scrape_article(path, uReq, soup, keyword_list):
     
     sub_page_html = access_url(path, uReq)
-    
+        
     if sub_page_html is not None:
             
         sub_page_soup = soup(sub_page_html, "html.parser")
 
-        body_tag = sub_page_soup.find("div", {"class" : "article-body"}) #find tags in the soup object
+        body_tag = sub_page_soup.find("div", {"class" : "article-content-container"}) #find tags in the soup object
         
         relevant_story = None;
-
+        print(body_tag.section.findAll('p'))
         #check each p tag found for words from the keyword list
-        for p in body_tag.findAll('p'):
-
-            if(len(keyword_list) > 0): #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
+        for p in body_tag.section.findAll('p'):
+            
+            if p is not None and len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
 
                 #check if any text from page contains key words stored in list, if keyword found, print page text
                 if(any(keyword in p.text for keyword in keyword_list)):
@@ -31,6 +31,8 @@ def scrape_article(path, uReq, soup, keyword_list):
 
             else:
                 relevant_story = True
+                
+        #TODO: Code above this point works, deve required below
 
         #article is relevant, build a beef record
         if(relevant_story): #execute if a story contains a keyword

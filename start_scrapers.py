@@ -54,7 +54,7 @@ while True:
     '''
     
     #initiate hold sequence to prevent over-scraping
-    sleep_secs = 30
+    sleep_secs = 180
     
     print("Sleeping for " + str(sleep_secs) + " seconds")
     time.sleep(sleep_secs)
