@@ -45,7 +45,7 @@ while True:
     print("Hip Hop Beef Scraped")
     
     print("Scraping Hip Hop DX...")
-    insert_loop(scrape_hiphopdx_home(uReq, soup, empty_keyword_list))
+    insert_loop(scrape_hiphopdx_home(uReq, soup, keyword_list))
     print("Hip Hop DX Scraped")
     
     print("Scraping Hot New Hip Hop...")

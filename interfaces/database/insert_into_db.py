@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-from interfaces.database.db_config import open_db_connection
 import time
-from objects.beef_object import BeefObject
 import pymongo
+import datetime
+from objects.beef_object import BeefObject
+from interfaces.database.db_config import open_db_connection
 
 def insert_loop(beef_objects):
     
@@ -51,6 +52,7 @@ def insert_if_not_exist(beef_object):
                         "relevant_actors" : beef_object.relevant_actors, 
                         "description" : beef_object.content,
                         "event_date" : beef_object.date,
+                        "date_added" : datetime.datetime.utcnow(),
                         "highlights" : beef_object.highlights,
                         "data_source" : beef_object.data_source,
                         "selected_categories" : beef_object.categories,
