@@ -81,13 +81,13 @@ def scrape_article(path, uReq, soup, keyword_list):
                 link = link_raw[0]["src"]
 
                 if "youtube" in link:
-                    link_type = "youtube"
+                    link_type = "youtube_embed"
                 elif "spotify" in link:
-                    link_type = "spotify"
+                    link_type = "spotify_embed"
                 elif "soundcloud" in link:
-                    link_type = "soundcloud"
+                    link_type = "soundcloud_embed"
                 elif "twitter" in link:
-                    link_type = "twitter"
+                    link_type = "twitter_embed"
 
                 media_link = {
                     "link": link,
