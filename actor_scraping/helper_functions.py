@@ -34,14 +34,15 @@ def interpret_date(date):
     
     date_extract = re.findall('\((.*?)\)', date)
     
-    date_split = date_extract[0].split("-")
-    
-    if len(date_split) == 3:
-    
-        date_return = date_split[2] + "/" + date_split[1] + "/" + date_split[0]
-    
-        return date_return
-    
-    else:
-        return date
-    
+    if len(date_extract) > 0 and "-" in date_extract[0]:
+        date_split = date_extract[0].split("-")
+
+        if len(date_split) == 3:
+
+            date_return = date_split[2] + "/" + date_split[1] + "/" + date_split[0]
+
+            return date_return
+
+        else:
+            return date
+    elif 
