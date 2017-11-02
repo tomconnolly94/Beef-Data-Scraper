@@ -45,4 +45,5 @@ def interpret_date(date):
 
         else:
             return date
-    elif 
+    else:
+        return date_extract
