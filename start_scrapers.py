@@ -4,7 +4,7 @@ import sys
 import time
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
-from interfaces.database.insert_into_db import insert_loop # import db insert function
+from interfaces.database.event_interfacing.insert_event_into_db import insert_loop # import db insert function
 import globals #import globals file
 
 #import scraper function
@@ -40,7 +40,7 @@ while True:
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
-    
+    '''
     print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")
@@ -56,7 +56,7 @@ while True:
     print("Scraping Hot New Hip Hop...")
     insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, empty_keyword_list))
     print("Hot New Hip Hop Scraped")
-    
+    '''
     
     #initiate hold sequence to prevent over-scraping
     sleep_secs = 180

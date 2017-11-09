@@ -106,5 +106,10 @@ def scrape_article(path, uReq, soup, keyword_list):
                 beef_obj = BeefObject(title_tag_array[0].text, actors_list, content_string, date_string, highlights, path, categories, img_link, media_link) #create beefObject
 
                 return beef_obj
+            
+            else:
+                print("exit 1")
+                return None
     else:
+        print("exit 2")
         return None
