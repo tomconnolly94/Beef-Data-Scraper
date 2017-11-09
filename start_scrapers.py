@@ -17,27 +17,32 @@ from scrapers.hot_new_hip_hop_scraper.hot_new_hip_hop_home import scrape_hot_new
 globals.init() #initiate globals
 
 #define keyword lists for scrapers to use
-keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter", "argument", "argue", "communications", "feud", "calls", "Hurricane")
+broad_keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter", "argument", "argue", "communications", "feud", "calls", "Hurricane")
+cnn_keyword_list = ("conflict", "argument", "feud")
 empty_keyword_list = ()
 
 #scraper loop
 while True:
     
-    for path in list(globals.blacklisted_urls): #loop through blacklist, decrease timeout counts and remove the paths with timeout counts at 0
+    #loop through blacklist, decrease timeout counts and remove the paths with timeout counts at 0
+    for path in list(globals.blacklisted_urls):
         
         if globals.blacklisted_urls[path] == 0:
             del globals.blacklisted_urls[path]
         else:
             globals.blacklisted_urls[path] = globals.blacklisted_urls[path] - 1
+            
+    
+    
     
     #start scraping
     
     print("Scraping BBC...")
-    insert_loop(scrape_bbc_home(uReq, soup, keyword_list))
+    insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
     
     print("Scraping CNN...")
-    insert_loop(scrape_cnn_home(uReq, soup, keyword_list))
+    insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")
     
     print("Scraping Hip Hop Beef...")
@@ -45,7 +50,7 @@ while True:
     print("Hip Hop Beef Scraped")
     
     print("Scraping Hip Hop DX...")
-    insert_loop(scrape_hiphopdx_home(uReq, soup, keyword_list))
+    insert_loop(scrape_hiphopdx_home(uReq, soup, broad_keyword_list))
     print("Hip Hop DX Scraped")
     
     print("Scraping Hot New Hip Hop...")

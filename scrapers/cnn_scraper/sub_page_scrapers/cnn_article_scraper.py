@@ -19,7 +19,7 @@ def scrape_article(path, uReq, soup, keyword_list):
 
         relevant_story = None;
 
-        if(len(content_tag_array) > 0): 
+        if(len(content_tag_array) > 0):
 
             #check each p tag found for words from the keyword list
             for p in content_tag_array:
