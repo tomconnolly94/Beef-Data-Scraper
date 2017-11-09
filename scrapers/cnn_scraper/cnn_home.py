@@ -2,7 +2,11 @@
 import globals #import globals file
 import re
 import demjson
+#interface imports
 from interfaces.url_access.url_access import access_url
+from interfaces.database.url_preloading.saved_scraped_url_access import save_url # import save url function
+from interfaces.database.url_preloading.saved_scraped_url_access import get_saved_urls # import preload url function
+#scraper imports
 from scrapers.cnn_scraper.sub_page_scrapers.cnn_article_scraper import scrape_article # import article scraper
 
 def scrape_cnn_home(uReq, soup, keyword_list):
@@ -28,10 +32,24 @@ def scrape_cnn_home(uReq, soup, keyword_list):
 
                 for x in range(0, len(script_json['siblings']['articleList'])): #for each tag
 
-                    beef_object = scrape_article(base_url + script_json['siblings']['articleList'][x]['uri'], uReq, soup, keyword_list)
+                    saved_urls = get_saved_urls(base_url)
+                    sub_page_url = base_url + script_json['siblings']['articleList'][x]['uri']
+                    
+                    print(sub_page_url)
+                    print(saved_urls.count())
+                    
 
-                    if beef_object != None:
-                        beef_objects.append(beef_object)
+                    if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
+                        print("preloaded url found, aborting scrape.")
+
+                    else:
+                        print("preloaded url not found, initiating scrape.")  
+                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)
+
+                        save_url(base_url, sub_page_url)
+                        
+                        if beef_object != None:
+                            beef_objects.append(beef_object)
 
                 return beef_objects
     else:

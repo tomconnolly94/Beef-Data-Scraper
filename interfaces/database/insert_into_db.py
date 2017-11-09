@@ -2,7 +2,7 @@
 
 import time
 import pymongo
-import datetime
+from datetime import datetime
 from interfaces.database.db_config import open_db_connection
 
 def insert_if_not_exist(formatted_object, table):
@@ -28,7 +28,7 @@ def insert_if_not_exist(formatted_object, table):
                     
         else:
             if db:
-                
+                print(table)                
                 if table == "scraped_training_events_dump_v0_1" or table == "all_scraped_events":
                     current_objects = db[table].find({ "title" : formatted_object["title"] })
                 elif table == "scraped_url_store":
@@ -65,12 +65,7 @@ def insert_if_not_exist(formatted_object, table):
 def get_objects_from_db_table(table, query_field, query_value):
     
     while True:
-        
-        logging = None
-        
-        if logging:
-            print("DB find attempt started for: " + formatted_object.title)
-        
+                
         try:
             #open db connection
             db = open_db_connection()
@@ -86,3 +81,31 @@ def get_objects_from_db_table(table, query_field, query_value):
         else:
             if db:
                 return db[table].find({})
+
+#create query to remove any saved scraped events that are more than a week old
+def remove_expired_events():
+
+    while True:
+                
+        try:
+            #open db connection
+            db = open_db_connection()
+            
+        except pymongo.errors.NetworkTimeout:
+            print("PYMONGO CONNECTION NETWORK TIMEOUT")
+            print("######################################################")
+        
+        except pymongo.errors.AutoReconnect:
+            print("PYMONGO CONNECTION AUTO RECONNECT")
+            print("######################################################")
+                    
+        else:
+            if db:
+                
+                query_date = datetime(datetime.fromtimestamp(time.time()).year, 
+                                      datetime.fromtimestamp(time.time()).month, 
+                                      datetime.fromtimestamp(time.time()).day - 1, 
+                                      datetime.fromtimestamp(time.time()).hour, 
+                                      datetime.fromtimestamp(time.time()).minute)
+                
+                db.scraped_url_store.remove({ "event_date" : { "$lt" : query_date } } )

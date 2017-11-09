@@ -3,7 +3,11 @@
 import globals #import globals file
 import re
 import demjson
+#interface imports
 from interfaces.url_access.url_access import access_url
+from interfaces.database.url_preloading.saved_scraped_url_access import save_url # import save url function
+from interfaces.database.url_preloading.saved_scraped_url_access import get_saved_urls # import preload url function
+#scraper imports
 from scrapers.hot_new_hip_hop_scraper.sub_page_scrapers.hot_new_hip_hop_article_scraper import scrape_article # import article scraper
 
 def scrape_hot_new_hip_hop_home(uReq, soup, keyword_list):
@@ -27,11 +31,21 @@ def scrape_hot_new_hip_hop_home(uReq, soup, keyword_list):
             for news_tag in news_tag_array:
                 
                 if news_tag and news_tag.div and news_tag.div.a and news_tag.div.a["href"]:
+                    
+                    saved_urls = get_saved_urls(base_url)
+                    sub_page_url = base_url + news_tag.div.a["href"]
 
-                    beef_object = scrape_article(base_url + news_tag.div.a["href"], uReq, soup, keyword_list)                
+                    if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
+                        print("preloaded url found, aborting scrape.")
 
-                    if beef_object != None:
-                        beef_objects.append(beef_object)
+                    else:
+
+                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)                
+
+                        save_url(base_url, sub_page_url)
+                            
+                        if beef_object != None:
+                            beef_objects.append(beef_object)
 
         return beef_objects
     else:

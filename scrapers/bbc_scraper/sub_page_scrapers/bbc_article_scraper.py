@@ -108,8 +108,6 @@ def scrape_article(path, uReq, soup, keyword_list):
                 return beef_obj
             
             else:
-                print("exit 1")
                 return None
     else:
-        print("exit 2")
         return None

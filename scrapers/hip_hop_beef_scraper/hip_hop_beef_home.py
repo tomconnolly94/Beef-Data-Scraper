@@ -3,7 +3,11 @@
 import globals #import globals file
 import re
 import demjson
+#interface imports
 from interfaces.url_access.url_access import access_url
+from interfaces.database.url_preloading.saved_scraped_url_access import save_url # import save url function
+from interfaces.database.url_preloading.saved_scraped_url_access import get_saved_urls # import preload url function
+#scraper imports
 from scrapers.hip_hop_beef_scraper.sub_page_scrapers.hip_hop_beef_article_scraper import scrape_article # import article scraper
 from scrapers.hip_hop_beef_scraper.sub_page_scrapers.hip_hop_beef_video_scraper import scrape_video # import article scraper
 
@@ -42,11 +46,21 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
                 a = tag.find("a")
 
                 if a and a["href"]:
-                    beef_object = scrape_video(a["href"], uReq, soup, keyword_list)
+                    
+                    saved_urls = get_saved_urls(base_url)
+                    sub_page_url = a["href"]
 
-                    if beef_object != None:
-                        beef_objects.append(beef_object)
-                        break;
+                    if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
+                        print("preloaded url found, aborting scrape.")
+
+                    else:
+                        beef_object = scrape_video(sub_page_url, uReq, soup, keyword_list)
+
+                        save_url(base_url, sub_page_url)
+
+                        if beef_object != None:
+                            beef_objects.append(beef_object)
+                            break;
         
         return beef_objects
     else:

@@ -50,7 +50,6 @@ def scrape_bbc_home(uReq, soup, keyword_list):
                             
                             if beef_object != None:
                                 beef_objects.append(beef_object)
-                                save_url(base_url, sub_page_url)
                                 #beef_object.print_beef()
 
             return beef_objects

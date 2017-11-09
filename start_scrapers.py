@@ -36,7 +36,7 @@ while True:
     
     
     #start scraping
-    
+    '''
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
@@ -44,7 +44,7 @@ while True:
     print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")
-    
+    '''
     print("Scraping Hip Hop Beef...")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, empty_keyword_list))
     print("Hip Hop Beef Scraped")
