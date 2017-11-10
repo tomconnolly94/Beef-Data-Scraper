@@ -35,10 +35,6 @@ def scrape_cnn_home(uReq, soup, keyword_list):
                     saved_urls = get_saved_urls(base_url)
                     sub_page_url = base_url + script_json['siblings']['articleList'][x]['uri']
                     
-                    print(sub_page_url)
-                    print(saved_urls.count())
-                    
-
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
                         print("preloaded url found, aborting scrape.")
 

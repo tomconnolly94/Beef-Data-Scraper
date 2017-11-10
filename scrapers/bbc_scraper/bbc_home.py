@@ -3,7 +3,7 @@ import globals
 #interface imports
 from interfaces.url_access.url_access import access_url
 from interfaces.database.url_preloading.saved_scraped_url_access import save_url # import save url function
-from interfaces.database.url_preloading.saved_scraped_url_access import get_saved_urls # import preload url function
+from interfaces.database.url_preloading.saved_scraped_url_access import check_url_history # import preload url function
 #sub scraper imports
 from scrapers.bbc_scraper.sub_page_scrapers.bbc_article_scraper import scrape_article # import article scraper
 
@@ -38,9 +38,7 @@ def scrape_bbc_home(uReq, soup, keyword_list):
                     
                     if path_split_2[0] != "blogs": #ensure we are not scraping a blog page
                     
-                        saved_urls = get_saved_urls(base_url)
-                            
-                        if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
+                        if check_url_history(): #check through pre loaded urls to ensure url has not already been scraped
                             print("preloaded url found, aborting scrape.")
                         
                         else:

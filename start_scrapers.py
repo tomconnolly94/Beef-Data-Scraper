@@ -4,9 +4,11 @@ import sys
 import time
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
-from interfaces.database.event_interfacing.insert_event_into_db import insert_loop # import db insert function
 import globals #import globals file
-
+#interface imports
+from interfaces.database.event_interfacing.insert_event_into_db import insert_loop # import db insert function
+from interfaces.database.insert_into_db import remove_expired_events
+from interfaces.database.url_preloading.saved_scraped_url_access import get_saved_urls # import preload url function
 #import scraper function
 from scrapers.bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
 from scrapers.cnn_scraper.cnn_home import scrape_cnn_home # import cnn home scraper
@@ -31,20 +33,23 @@ while True:
             del globals.blacklisted_urls[path]
         else:
             globals.blacklisted_urls[path] = globals.blacklisted_urls[path] - 1
-            
     
+    #load saved urls
+    get_saved_urls()
     
+    #check on expired events
+    remove_expired_events()    
     
     #start scraping
-    '''
+    
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
-    '''
+    
     print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")
-    '''
+    
     print("Scraping Hip Hop Beef...")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, empty_keyword_list))
     print("Hip Hop Beef Scraped")
@@ -56,7 +61,7 @@ while True:
     print("Scraping Hot New Hip Hop...")
     insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, empty_keyword_list))
     print("Hot New Hip Hop Scraped")
-    '''
+    
     
     #initiate hold sequence to prevent over-scraping
     sleep_secs = 180

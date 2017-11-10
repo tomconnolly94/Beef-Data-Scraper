@@ -28,7 +28,7 @@ def insert_if_not_exist(formatted_object, table):
                     
         else:
             if db:
-                print(table)                
+                
                 if table == "scraped_training_events_dump_v0_1" or table == "all_scraped_events":
                     current_objects = db[table].find({ "title" : formatted_object["title"] })
                 elif table == "scraped_url_store":
@@ -104,8 +104,9 @@ def remove_expired_events():
                 
                 query_date = datetime(datetime.fromtimestamp(time.time()).year, 
                                       datetime.fromtimestamp(time.time()).month, 
-                                      datetime.fromtimestamp(time.time()).day - 1, 
+                                      datetime.fromtimestamp(time.time()).day - 2, 
                                       datetime.fromtimestamp(time.time()).hour, 
                                       datetime.fromtimestamp(time.time()).minute)
                 
                 db.scraped_url_store.remove({ "event_date" : { "$lt" : query_date } } )
+                return None

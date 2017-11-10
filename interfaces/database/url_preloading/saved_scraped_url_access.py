@@ -6,7 +6,8 @@ from datetime import datetime
 from interfaces.database.db_config import open_db_connection
 from interfaces.database.insert_into_db import insert_if_not_exist
 from interfaces.database.insert_into_db import get_objects_from_db_table
-from interfaces.database.insert_into_db import remove_expired_events
+
+saved_urls = ()
 
 def save_url(source, url):
     
@@ -20,8 +21,11 @@ def save_url(source, url):
 
     
 def get_saved_urls(source):
+        
+    saved_urls = get_objects_from_db_table("scraped_url_store", "source", source)
+
+def check_url_history(target, source):
     
-    #check on expired events
-    remove_expired_events()
+    saved_urls = get_saved_urls(source)
     
-    return get_objects_from_db_table("scraped_url_store", "source", source)
+    return any(url_obj["url"] == target for url_obj in saved_urls)
