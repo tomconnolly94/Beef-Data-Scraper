@@ -4,8 +4,7 @@ import re
 import demjson
 from objects.beef_object import BeefObject
 from interfaces.url_access.url_access import access_url
-from text_extraction.extract_names import extract_names
-from text_extraction.extract_quotes import extract_quotes
+from text_extraction.text_extraction_helper_functions import extract_names
 
 def scrape_article(path, uReq, soup, keyword_list):
     
