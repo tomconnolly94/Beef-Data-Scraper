@@ -25,6 +25,9 @@ def scrape_hiphopdx_home(uReq, soup, keyword_list):
         news_tag = page_soup.find("div", {"class", "wire"})#, text=pattern) #find tags in the soup object
 
         beef_objects = []
+            
+        #load saved urls
+        saved_urls = get_saved_urls(base_url)
 
         if len(news_tag) > 0: #only execute if tags have been found
             

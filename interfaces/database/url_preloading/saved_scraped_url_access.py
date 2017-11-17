@@ -22,8 +22,14 @@ def save_url(source, url):
     
 def get_saved_urls(source):
         
-    saved_urls = get_objects_from_db_table("scraped_url_store", "source", source)
+    return get_objects_from_db_table("scraped_url_store", "source", source)
 
+    
+def get_all_saved_urls():
+        
+    return get_objects_from_db_table("scraped_url_store", "source", source)
+    
+    
 def check_url_history(target, source):
     
     saved_urls = get_saved_urls(source)

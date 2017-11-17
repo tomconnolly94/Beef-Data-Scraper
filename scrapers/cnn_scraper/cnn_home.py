@@ -9,7 +9,7 @@ from interfaces.database.url_preloading.saved_scraped_url_access import get_save
 #scraper imports
 from scrapers.cnn_scraper.sub_page_scrapers.cnn_article_scraper import scrape_article # import article scraper
 
-def scrape_cnn_home(uReq, soup, keyword_list):
+def scrape_cnn_home(uReq, soup, keyword_list, saved_urls):
     
     base_url = 'http://edition.cnn.com' #url to scrape
     
@@ -25,6 +25,9 @@ def scrape_cnn_home(uReq, soup, keyword_list):
             if(tag_array[10].text): #ensure the element has an anchor tag
 
                 beef_objects = []
+            
+                #load saved urls
+                saved_urls = get_saved_urls(base_url)
 
                 script_text = tag_array[10].text
                 result = re.search('CNN.contentModel = (.*);', script_text)
@@ -32,7 +35,6 @@ def scrape_cnn_home(uReq, soup, keyword_list):
 
                 for x in range(0, len(script_json['siblings']['articleList'])): #for each tag
 
-                    saved_urls = get_saved_urls(base_url)
                     sub_page_url = base_url + script_json['siblings']['articleList'][x]['uri']
                     
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped

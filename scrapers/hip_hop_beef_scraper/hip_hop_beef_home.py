@@ -25,6 +25,9 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
         news_tag_array = news_tag_array.findAll("li")#, text=pattern) #find tags in the soup object
 
         beef_objects = []
+            
+        #load saved urls
+        saved_urls = get_saved_urls(base_url)
 
         if len(news_tag_array) > 0: #only execute if tags have been found
 

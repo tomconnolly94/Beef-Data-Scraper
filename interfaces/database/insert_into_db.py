@@ -80,7 +80,15 @@ def get_objects_from_db_table(table, query_field, query_value):
                     
         else:
             if db:
-                return db[table].find({})
+                print(query_field)
+                print(query_value)
+                
+                if len(query_field) > 0 and len(query_value) > 0:
+                    query_string = { query_field : query_value }
+                    
+                    return db[table].find(query_string)
+                else:
+                    return db[table].find({})
 
 #create query to remove any saved scraped events that are more than a week old
 def remove_expired_events():
