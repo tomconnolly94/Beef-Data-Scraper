@@ -35,7 +35,6 @@ def scrape_hot_new_hip_hop_home(uReq, soup, keyword_list):
                 
                 if news_tag and news_tag.div and news_tag.div.a and news_tag.div.a["href"]:
                     
-                    saved_urls = get_saved_urls(base_url)
                     sub_page_url = base_url + news_tag.div.a["href"]
 
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped

@@ -35,7 +35,6 @@ def scrape_hiphopdx_home(uReq, soup, keyword_list):
                 
                 if a and a["href"] and a["class"][0] != "next":
                     
-                    saved_urls = get_saved_urls(base_url)
                     sub_page_url = base_url + a["href"]
 
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped

@@ -80,9 +80,6 @@ def get_objects_from_db_table(table, query_field, query_value):
                     
         else:
             if db:
-                print(query_field)
-                print(query_value)
-                
                 if len(query_field) > 0 and len(query_value) > 0:
                     query_string = { query_field : query_value }
                     
