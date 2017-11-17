@@ -9,7 +9,7 @@ from interfaces.database.url_preloading.saved_scraped_url_access import get_save
 #scraper imports
 from scrapers.cnn_scraper.sub_page_scrapers.cnn_article_scraper import scrape_article # import article scraper
 
-def scrape_cnn_home(uReq, soup, keyword_list, saved_urls):
+def scrape_cnn_home(uReq, soup, keyword_list):
     
     base_url = 'http://edition.cnn.com' #url to scrape
     
