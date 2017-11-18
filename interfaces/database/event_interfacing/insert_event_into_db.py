@@ -50,14 +50,36 @@ def inspect_beef_event_for_broken_fields(beef_object):
         
         #check string type or array type fields that length is larger than 0
         if index in [0, 1, 2, 3, 4, 6, 7]:
-            if len(field) < 0:
+            if len(field) == 0:
                 # string field is broken, record it
+                
+                if index == 0:
+                    record_broken_field("title", beef_object_fields[5], "empty")
+                elif index == 1:
+                    record_broken_field("relevant_actors", beef_object_fields[5], "empty")
+                elif index == 2:
+                    record_broken_field("content", beef_object_fields[5], "empty")    
+                elif index == 3:
+                    record_broken_field("date", beef_object_fields[5], "empty")          
+                elif index == 4:
+                    record_broken_field("quotes", beef_object_fields[5], "empty")     
+                elif index == 6:
+                    record_broken_field("categories", beef_object_fields[5], "empty")            
+                elif index == 7:
+                    record_broken_field("img_link", beef_object_fields[5], "empty")
+                
+                
                 
         if index == 8:
             if len(field.type) == 0 or len(field.link) == 0:
                 #video data field is empty, record it
                 
-def record_broken_field(field_name, source):
+def record_broken_field(field_name, source, mode):
     
+    insert_object = ({
+        "broken_field" : field_name,
+        "source" : source,
+        "broken_mode": mode #empty/broken/too_short/too_long
+    })
     
-    insert(insert_object, "broken_fields")
+    insert(insert_object, "broken_fields", None)

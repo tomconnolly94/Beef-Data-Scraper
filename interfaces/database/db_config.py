@@ -16,6 +16,9 @@ def open_db_connection():
         db.authenticate(MONGO_USER, MONGO_PASS)
     except pymongo.errors.AutoReconnect:
         print("PYMONGO AUTH AUTO RECONNECT")
-        print("######################################################")        
+        print("######################################################")    
+    except pymongo.errors.NetworkTimeout:
+        print("PYMONGO CONNECTION NETWORK TIMEOUT")
+        print("######################################################")
     else:
         return db

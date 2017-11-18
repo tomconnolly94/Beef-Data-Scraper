@@ -5,7 +5,11 @@ import pymongo
 from datetime import datetime
 from interfaces.database.db_config import open_db_connection
 
-def insert(formatted_object, table):
+def insert(formatted_object, table, db):
+    
+    if db is None:
+        #open db connection
+        db = open_db_connection()
     
     try:
         db[table].insert(formatted_object)
@@ -28,6 +32,7 @@ def insert(formatted_object, table):
             print("Record inserted into table: " + table)
         return None
 
+    
 def insert_if_not_exist(formatted_object, table):
     
     while True:
@@ -37,18 +42,9 @@ def insert_if_not_exist(formatted_object, table):
         if logging:
             print("DB insert attempt started for: " + formatted_object["title"])
         
-        try:
-            #open db connection
-            db = open_db_connection()
-            
-        except pymongo.errors.NetworkTimeout:
-            print("PYMONGO CONNECTION NETWORK TIMEOUT")
-            print("######################################################")
+        #open db connection
+        db = open_db_connection()
         
-        except pymongo.errors.AutoReconnect:
-            print("PYMONGO CONNECTION AUTO RECONNECT")
-            print("######################################################")
-                    
         else:
             if db:
                 
@@ -59,7 +55,7 @@ def insert_if_not_exist(formatted_object, table):
 
                 if current_objects.count() < 1:
                     
-                    insert(formatted_object, table)
+                    insert(formatted_object, table, db)
 
                 else:
                     if logging:
