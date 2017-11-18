@@ -5,6 +5,29 @@ import pymongo
 from datetime import datetime
 from interfaces.database.db_config import open_db_connection
 
+def insert(formatted_object, table):
+    
+    try:
+        db[table].insert(formatted_object)
+
+    except ConnectionFailure:
+        if logging:
+            print("Pymongo error, retrying db connection...")
+    except pymongo.errors.NetworkTimeout:
+        print("PYMONGO INSERT NETWORK TIMEOUT")
+        print("######################################################")
+        raise
+
+    except pymongo.errors.AutoReconnect:
+        print("PYMONGO INSERT AUTO RECONNECT")
+        print("######################################################")
+        raise
+
+    else: #execute if "try" block is successful
+        if logging:
+            print("Record inserted into table: " + table)
+        return None
+
 def insert_if_not_exist(formatted_object, table):
     
     while True:
@@ -36,26 +59,7 @@ def insert_if_not_exist(formatted_object, table):
 
                 if current_objects.count() < 1:
                     
-                    try:
-                        db[table].insert(formatted_object)
-
-                    except ConnectionFailure:
-                        if logging:
-                            print("Pymongo error, retrying db connection...")
-                    except pymongo.errors.NetworkTimeout:
-                        print("PYMONGO INSERT NETWORK TIMEOUT")
-                        print("######################################################")
-                        raise
-
-                    except pymongo.errors.AutoReconnect:
-                        print("PYMONGO INSERT AUTO RECONNECT")
-                        print("######################################################")
-                        raise
-
-                    else: #execute if "try" block is successful
-                        if logging:
-                            print("Record inserted into table: " + table)
-                        return None
+                    insert(formatted_object, table)
 
                 else:
                     if logging:

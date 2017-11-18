@@ -40,11 +40,11 @@ while True:
     remove_expired_events()    
     
     #start scraping
-    
+    '''
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
-    
+    '''
     print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")

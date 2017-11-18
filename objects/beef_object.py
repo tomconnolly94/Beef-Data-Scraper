@@ -24,3 +24,7 @@ class BeefObject:
         print(self.categories)
         print(self.img_title)
         print(self.media_link)
+
+    def get_fields_as_array(self):
+        
+        return [self.title, self.relevant_actors, self.content, self.date, self.highlights, self.data_source, self.categories, self.img_title, self.media_link]
