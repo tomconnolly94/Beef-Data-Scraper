@@ -51,35 +51,49 @@ def inspect_beef_event_for_broken_fields(beef_object):
         #check string type or array type fields that length is larger than 0
         if index in [0, 1, 2, 3, 4, 6, 7]:
             if len(field) == 0:
-                # string field is broken, record it
                 
+                #check fields for empty values
                 if index == 0:
-                    record_broken_field("title", beef_object_fields[5], "empty")
+                    record_broken_field("title", beef_object_fields[5], "empty", field)
                 elif index == 1:
-                    record_broken_field("relevant_actors", beef_object_fields[5], "empty")
+                    record_broken_field("relevant_actors", beef_object_fields[5], "empty", field)
                 elif index == 2:
-                    record_broken_field("content", beef_object_fields[5], "empty")    
+                    record_broken_field("content", beef_object_fields[5], "empty", field)    
                 elif index == 3:
-                    record_broken_field("date", beef_object_fields[5], "empty")          
+                    record_broken_field("date", beef_object_fields[5], "empty", field)          
                 elif index == 4:
-                    record_broken_field("quotes", beef_object_fields[5], "empty")     
+                    record_broken_field("quotes", beef_object_fields[5], "empty", field)     
                 elif index == 6:
-                    record_broken_field("categories", beef_object_fields[5], "empty")            
+                    record_broken_field("categories", beef_object_fields[5], "empty", field)            
                 elif index == 7:
-                    record_broken_field("img_link", beef_object_fields[5], "empty")
+                    record_broken_field("img_link", beef_object_fields[5], "empty", field)
+            
+            #check field values for incorrect formatting or too long/short values
+            if index == 1 and len(field) < 2:
+                record_broken_field("relevant_actors", beef_object_fields[5], "too_short", field)
+            elif index == 2:
+                if len(field) < 100:
+                    record_broken_field("relevant_actors", beef_object_fields[5], "too_long", field)
+                elif len(field) > 1000:
+                    record_broken_field("relevant_actors", beef_object_fields[5], "too_long", field)
+            elif index == 3:
+                if len(field.split("/")) != 3:
+                    record_broken_field("date", beef_object_fields[5], "incorrect_format", field)
+            elif index == 6:
+                if len(field) < 1:
+                    record_broken_field("categories", beef_object_fields[5], "too_short", field)
                 
+        elif index == 8:
+            if len(field["type"]) == 0 or len(field["link"]) == 0:
+                record_broken_field("special_feature", beef_object_fields[5], "empty", field)
                 
-                
-        if index == 8:
-            if len(field.type) == 0 or len(field.link) == 0:
-                #video data field is empty, record it
-                
-def record_broken_field(field_name, source, mode):
+def record_broken_field(field_name, source, mode, value):
     
     insert_object = ({
-        "broken_field" : field_name,
-        "source" : source,
-        "broken_mode": mode #empty/broken/too_short/too_long
+        "broken_field": field_name,
+        "source": source,
+        "broken_mode": mode, #empty/incorrect_format/too_short/too_long
+        "value": value
     })
     
     insert(insert_object, "broken_fields", None)

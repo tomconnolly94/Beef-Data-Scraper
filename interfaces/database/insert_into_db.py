@@ -7,30 +7,32 @@ from interfaces.database.db_config import open_db_connection
 
 def insert(formatted_object, table, db):
     
-    if db is None:
-        #open db connection
-        db = open_db_connection()
-    
-    try:
-        db[table].insert(formatted_object)
+    while True:
+        
+        logging = None
 
-    except ConnectionFailure:
-        if logging:
-            print("Pymongo error, retrying db connection...")
-    except pymongo.errors.NetworkTimeout:
-        print("PYMONGO INSERT NETWORK TIMEOUT")
-        print("######################################################")
-        raise
+        if db is None:
+            #open db connection
+            db = open_db_connection()
 
-    except pymongo.errors.AutoReconnect:
-        print("PYMONGO INSERT AUTO RECONNECT")
-        print("######################################################")
-        raise
+        try:
+            db[table].insert(formatted_object)
 
-    else: #execute if "try" block is successful
-        if logging:
-            print("Record inserted into table: " + table)
-        return None
+        except ConnectionFailure:
+            if logging:
+                print("Pymongo error, retrying db connection...")
+        except pymongo.errors.NetworkTimeout:
+            print("PYMONGO INSERT NETWORK TIMEOUT")
+            print("######################################################")
+
+        except pymongo.errors.AutoReconnect:
+            print("PYMONGO INSERT AUTO RECONNECT")
+            print("######################################################")
+
+        else: #execute if "try" block is successful
+            if logging:
+                print("Record inserted into table: " + table)
+            return None
 
     
 def insert_if_not_exist(formatted_object, table):
@@ -45,22 +47,21 @@ def insert_if_not_exist(formatted_object, table):
         #open db connection
         db = open_db_connection()
         
-        else:
-            if db:
-                
-                if table == "scraped_training_events_dump_v0_1" or table == "all_scraped_events":
-                    current_objects = db[table].find({ "title" : formatted_object["title"] })
-                elif table == "scraped_url_store":
-                    current_objects = db[table].find({ "url" : formatted_object["url"] })
+        if db:
 
-                if current_objects.count() < 1:
-                    
-                    insert(formatted_object, table, db)
+            if table == "scraped_training_events_dump_v0_1" or table == "all_scraped_events":
+                current_objects = db[table].find({ "title" : formatted_object["title"] })
+            elif table == "scraped_url_store":
+                current_objects = db[table].find({ "url" : formatted_object["url"] })
 
-                else:
-                    if logging:
-                        print("Record already exists.")
-                    return None #break loop because record already exists
+            if current_objects.count() < 1:
+
+                insert(formatted_object, table, db)
+
+            else:
+                if logging:
+                    print("Record already exists.")
+                return None #break loop because record already exists
                 
 def get_objects_from_db_table(table, query_field, query_value):
     
