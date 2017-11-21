@@ -79,9 +79,6 @@ def inspect_beef_event_for_broken_fields(beef_object):
             elif index == 3:
                 if len(field.split("/")) != 3:
                     record_broken_field("date", beef_object_fields[5], "incorrect_format", field)
-            elif index == 6:
-                if len(field) < 1:
-                    record_broken_field("categories", beef_object_fields[5], "too_short", field)
                 
         elif index == 8:
             if len(field["type"]) == 0 or len(field["link"]) == 0:
