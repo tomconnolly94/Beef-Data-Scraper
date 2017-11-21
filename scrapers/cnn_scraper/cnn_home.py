@@ -11,6 +11,8 @@ from scrapers.cnn_scraper.sub_page_scrapers.cnn_article_scraper import scrape_ar
 
 def scrape_cnn_home(uReq, soup, keyword_list):
     
+    logging = None
+    
     base_url = 'http://edition.cnn.com' #url to scrape
     
     raw_page_html = access_url(base_url, uReq)#make request for page
@@ -32,19 +34,27 @@ def scrape_cnn_home(uReq, soup, keyword_list):
                 script_text = tag_array[10].text
                 result = re.search('CNN.contentModel = (.*);', script_text)
                 script_json = demjson.decode(result.group(1))
+                
+                percent_per_scrape = 100/len(script_json['siblings']['articleList'])
 
                 for x in range(0, len(script_json['siblings']['articleList'])): #for each tag
-
+                    
+                    print(str(round(x * percent_per_scrape)) + "% complete.")
+                    
                     sub_page_url = base_url + script_json['siblings']['articleList'][x]['uri']
                     
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
-                        print("preloaded url found, aborting scrape.")
+                        if logging:
+                            print("preloaded url found, aborting scrape.")
 
                     else:
-                        print("preloaded url not found, initiating scrape.")  
-                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)
+                        if logging:
+                            print("preloaded url not found, initiating scrape.")
 
+                        #url must be saved under these conditions: 1. it has not been previously scraped, 2. it may not be relevant to beef and therefore may not be added to selected events, 
                         save_url(base_url, sub_page_url)
+
+                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)
                         
                         if beef_object != None:
                             beef_objects.append(beef_object)

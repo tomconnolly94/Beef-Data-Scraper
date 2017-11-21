@@ -7,14 +7,9 @@ from interfaces.database.insert_into_db import insert
 def insert_loop(beef_objects):
     
     print("Events Scraped: " + str(len(beef_objects)))
-    insert_count = 0
 
     for beef_object in beef_objects:
-        if format_and_insert_scraped_beef_event(beef_object):
-            insert_count += 1
-        
-        
-    print("Events Inserted: " + str(insert_count))
+        format_and_insert_scraped_beef_event(beef_object)
 
 
 def format_and_insert_scraped_beef_event(beef_object):
@@ -34,13 +29,14 @@ def format_and_insert_scraped_beef_event(beef_object):
         "media_link" : beef_object.media_link,
     })
 
-    #insert_if_not_exist(document, "scraped_training_events_dump_v0_1")
-
+    insert_if_not_exist(document, "scraped_training_events_dump_v0_1")
+    '''
     document_min = ({
         "title" : beef_object.title
     })
 
-    #insert_if_not_exist(document_min, "all_scraped_events") 
+    insert_if_not_exist(document_min, "all_scraped_events")
+    '''
 
 def inspect_beef_event_for_broken_fields(beef_object):
     
@@ -90,7 +86,8 @@ def record_broken_field(field_name, source, mode, value):
         "broken_field": field_name,
         "source": source,
         "broken_mode": mode, #empty/incorrect_format/too_short/too_long
-        "value": value
+        "value": value,
+        "date_added" : datetime.datetime.utcnow()
     })
     
     insert(insert_object, "broken_fields", None)

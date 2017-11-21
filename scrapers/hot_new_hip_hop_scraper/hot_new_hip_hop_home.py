@@ -12,8 +12,9 @@ from scrapers.hot_new_hip_hop_scraper.sub_page_scrapers.hot_new_hip_hop_article_
 
 def scrape_hot_new_hip_hop_home(uReq, soup, keyword_list):
     
+    logging = None
+    
     base_url = 'http://hotnewhiphop.com' #url to scrape
-
     initial_suffix = "/tags/beef/news"
 
     raw_page_html = access_url(base_url + initial_suffix, uReq)#make request for page
@@ -28,24 +29,32 @@ def scrape_hot_new_hip_hop_home(uReq, soup, keyword_list):
             
         #load saved urls
         saved_urls = get_saved_urls(base_url)
+        
+        percent_per_scrape = 100/len(news_tag_array)
 
         if len(news_tag_array) > 0: #only execute if tags have been found
             
-            for news_tag in news_tag_array:
+            for x, news_tag in enumerate(news_tag_array):
                 
+                print(str(round(x * percent_per_scrape)) + "% complete.")
+
                 if news_tag and news_tag.div and news_tag.div.a and news_tag.div.a["href"]:
                     
                     sub_page_url = base_url + news_tag.div.a["href"]
 
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
-                        print("preloaded url found, aborting scrape.")
+                        if logging:
+                            print("preloaded url found, aborting scrape.")
 
                     else:
+                        if logging:
+                            print("preloaded url not found, initiating scrape.")
 
-                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)                
-
+                        #url must be saved under these conditions: 1. it has not been previously scraped, 2. it may not be relevant to beef and therefore may not be added to selected events, 
                         save_url(base_url, sub_page_url)
                             
+                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)                
+
                         if beef_object != None:
                             beef_objects.append(beef_object)
 

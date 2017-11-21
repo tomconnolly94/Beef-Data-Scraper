@@ -12,8 +12,9 @@ from scrapers.hiphopdx_scraper.sub_page_scrapers.hiphopdx_article_scraper import
 
 def scrape_hiphopdx_home(uReq, soup, keyword_list):
     
+    logging = None
+    
     base_url = 'https://hiphopdx.com' #url to scrape
-
     initial_suffix = "/news"
 
     raw_page_html = access_url(base_url + initial_suffix, uReq)#make request for page
@@ -29,23 +30,31 @@ def scrape_hiphopdx_home(uReq, soup, keyword_list):
         #load saved urls
         saved_urls = get_saved_urls(base_url)
 
+        percent_per_scrape = 100/len(news_tag.findAll("a"))
+
         if len(news_tag) > 0: #only execute if tags have been found
             
-            for a in news_tag.findAll("a"):
+            for x, a in enumerate(news_tag.findAll("a")):
+                
+                print(str(round(x * percent_per_scrape)) + "% complete.")
                 
                 if a and a["href"] and a["class"][0] != "next":
                     
                     sub_page_url = base_url + a["href"]
 
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
-                        print("preloaded url found, aborting scrape.")
+                        if logging:
+                            print("preloaded url found, aborting scrape.")
 
                     else:
-                    
-                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)                
+                        if logging:
+                            print("preloaded url not found, initiating scrape.")
 
+                        #url must be saved under these conditions: 1. it has not been previously scraped, 2. it may not be relevant to beef and therefore may not be added to selected events, 
                         save_url(base_url, sub_page_url)
                             
+                        beef_object = scrape_article(sub_page_url, uReq, soup, keyword_list)                
+
                         if beef_object != None:
                             beef_objects.append(beef_object)
                     

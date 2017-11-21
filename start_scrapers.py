@@ -19,7 +19,7 @@ from scrapers.hot_new_hip_hop_scraper.hot_new_hip_hop_home import scrape_hot_new
 globals.init() #initiate globals
 
 #define keyword lists for scrapers to use
-broad_keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter", "argument", "argue", "communications", "feud", "calls", "Hurricane")
+broad_keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-", "argument", "argue", "communications", "feud", "calls", "Hurricane")
 cnn_keyword_list = ("conflict", "argument", "feud")
 empty_keyword_list = ()
 
@@ -40,11 +40,11 @@ while True:
     remove_expired_events()    
     
     #start scraping
-    '''
+    
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
-    '''
+    
     print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")

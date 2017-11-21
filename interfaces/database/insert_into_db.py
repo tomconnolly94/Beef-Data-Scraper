@@ -84,9 +84,9 @@ def get_objects_from_db_table(table, query_field, query_value):
                 if len(query_field) > 0 and len(query_value) > 0:
                     query_string = { query_field : query_value }
                     
-                    return db[table].find(query_string)
+                    return list(db[table].find(query_string))
                 else:
-                    return db[table].find({})
+                    return list(db[table].find({}))
 
 #create query to remove any saved scraped events that are more than a week old
 def remove_expired_events():
@@ -110,9 +110,10 @@ def remove_expired_events():
                 
                 query_date = datetime(datetime.fromtimestamp(time.time()).year, 
                                       datetime.fromtimestamp(time.time()).month, 
-                                      datetime.fromtimestamp(time.time()).day - 2, 
+                                      datetime.fromtimestamp(time.time()).day - 1, 
                                       datetime.fromtimestamp(time.time()).hour, 
                                       datetime.fromtimestamp(time.time()).minute)
                 
-                db.scraped_url_store.remove({ "event_date" : { "$lt" : query_date } } )
+                db.scraped_url_store.remove({ "date_added" : { "$lt" : query_date } } )
+                db.broken_fields.remove({ "date_added" : { "$lt" : query_date } } )
                 return None

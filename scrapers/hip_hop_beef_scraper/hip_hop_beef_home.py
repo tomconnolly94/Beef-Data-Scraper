@@ -13,6 +13,8 @@ from scrapers.hip_hop_beef_scraper.sub_page_scrapers.hip_hop_beef_video_scraper 
 
 def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
     
+    logging = None
+    
     base_url = 'http://hiphopbeef.com/' #url to scrape
     
     raw_page_html = access_url(base_url, uReq)#make request for page
@@ -31,7 +33,12 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
 
         if len(news_tag_array) > 0: #only execute if tags have been found
 
-            for tag in news_tag_array:
+            percent_per_scrape = 100/len(news_tag_array)
+            
+            for x, tag in enumerate(news_tag_array):
+                
+                print(str(round(x * percent_per_scrape)) + "% complete.")
+                
                 a = tag.find("a")
 
                 if a and a["href"]:
@@ -45,7 +52,12 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
 
         if len(video_tag_array) > 0: #only execute if tags have been found
 
-            for tag in video_tag_array:
+            percent_per_scrape = 100/len(news_tag_array)
+            
+            for x, tag in enumerate(video_tag_array):
+                
+                print(str(round(x * percent_per_scrape)) + "% complete.")
+                
                 a = tag.find("a")
 
                 if a and a["href"]:
@@ -53,12 +65,17 @@ def scrape_hip_hop_beef_home(uReq, soup, keyword_list):
                     sub_page_url = a["href"]
 
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
-                        print("preloaded url found, aborting scrape.")
+                        if logging:
+                            print("preloaded url found, aborting scrape.")
 
                     else:
-                        beef_object = scrape_video(sub_page_url, uReq, soup, keyword_list)
+                        if logging:
+                            print("preloaded url not found, initiating scrape.")
 
+                        #url must be saved under these conditions: 1. it has not been previously scraped, 2. it may not be relevant to beef and therefore may not be added to selected events, 
                         save_url(base_url, sub_page_url)
+
+                        beef_object = scrape_video(sub_page_url, uReq, soup, keyword_list)
 
                         if beef_object != None:
                             beef_objects.append(beef_object)
