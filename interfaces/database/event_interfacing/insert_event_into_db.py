@@ -42,6 +42,8 @@ def inspect_beef_event_for_broken_fields(beef_object):
     
     beef_object_fields = beef_object.get_fields_as_array()
     
+    print(beef_object_fields)
+    
     for index, field in enumerate(beef_object_fields):
         
         #check string type or array type fields that length is larger than 0
@@ -58,6 +60,7 @@ def inspect_beef_event_for_broken_fields(beef_object):
                 elif index == 3:
                     record_broken_field("date", beef_object_fields[5], "empty", field)          
                 elif index == 4:
+                    print(beef_object_fields[0])
                     record_broken_field("quotes", beef_object_fields[5], "empty", field)     
                 elif index == 6:
                     record_broken_field("categories", beef_object_fields[5], "empty", field)            
