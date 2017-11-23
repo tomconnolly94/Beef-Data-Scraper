@@ -70,7 +70,7 @@ while True:
     print("Hot New Hip Hop Scraped")
     
     #initiate hold sequence to prevent over-scraping
-    sleep_secs = 180
+    sleep_secs = 300 # 5 minutes
     
     print("Sleeping for " + str(sleep_secs) + " seconds")
     time.sleep(sleep_secs)
