@@ -9,9 +9,10 @@ import globals #import globals file
 from interfaces.database.event_interfacing.insert_event_into_db import insert_loop # import db insert function
 from interfaces.database.insert_into_db import remove_expired_events
 from interfaces.database.url_preloading.saved_scraped_url_access import get_all_saved_urls # import preload url function
-#import scraper function
+#import home scraper functions
 from scrapers.bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
 from scrapers.cnn_scraper.cnn_home import scrape_cnn_home # import cnn home scraper
+from scrapers.give_me_sport_scraper.give_me_sport_home import scrape_give_me_sport_home # import cnn home scraper
 from scrapers.hip_hop_beef_scraper.hip_hop_beef_home import scrape_hip_hop_beef_home # import hip hop beef home scraper
 from scrapers.hiphopdx_scraper.hiphopdx_home import scrape_hiphopdx_home # import hip hop dx home scraper
 from scrapers.hot_new_hip_hop_scraper.hot_new_hip_hop_home import scrape_hot_new_hip_hop_home # import hip hop dx home scraper
@@ -49,6 +50,10 @@ while True:
     insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")
     
+    print("Scraping Give me Sport...")
+    insert_loop(scrape_give_me_sport_home(uReq, soup, empty_keyword_list))
+    print("Give me Sport Scraped.")
+    
     print("Scraping Hip Hop Beef...")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, empty_keyword_list))
     print("Hip Hop Beef Scraped")
@@ -60,7 +65,6 @@ while True:
     print("Scraping Hot New Hip Hop...")
     insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, empty_keyword_list))
     print("Hot New Hip Hop Scraped")
-    
     
     #initiate hold sequence to prevent over-scraping
     sleep_secs = 180
