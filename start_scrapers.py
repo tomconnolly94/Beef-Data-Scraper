@@ -34,9 +34,7 @@ while True:
             del globals.blacklisted_urls[path]
         else:
             globals.blacklisted_urls[path] = globals.blacklisted_urls[path] - 1
-    
-    
-    
+        
     #check on expired events
     remove_expired_events()    
     
