@@ -11,6 +11,7 @@ from interfaces.database.insert_into_db import remove_expired_events
 from interfaces.database.url_preloading.saved_scraped_url_access import get_all_saved_urls # import preload url function
 #import home scraper functions
 from scrapers.bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
+from scrapers.bet_scraper.bet_home import scrape_bet_home # import bbc home scraper
 from scrapers.bossip_scraper.bossip_home import scrape_bossip_home # import bbc home scraper
 from scrapers.cnn_scraper.cnn_home import scrape_cnn_home # import cnn home scraper
 from scrapers.give_me_sport_scraper.give_me_sport_home import scrape_give_me_sport_home # import cnn home scraper
@@ -44,7 +45,11 @@ while True:
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
-    
+    '''
+    print("Scraping BET...")
+    insert_loop(scrape_bet_home(uReq, soup, broad_keyword_list))
+    print("BET Scraped.")
+    '''
     print("Scraping Bossip...")
     insert_loop(scrape_bossip_home(uReq, soup, empty_keyword_list))
     print("Bossip Scraped.")
