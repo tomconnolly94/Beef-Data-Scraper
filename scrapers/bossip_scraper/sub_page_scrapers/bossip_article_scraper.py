@@ -15,14 +15,14 @@ def scrape_article(path, uReq, soup, keyword_list):
             
         sub_page_soup = soup(sub_page_html, "html.parser")
 
-        body_tag = sub_page_soup.find("div", {"class" : "article-content-container"}) #find tags in the soup object
+        #body_tag = sub_page_soup.find("div", {"class" : "article-content-container"}) #find tags in the soup object
         
         relevant_story = None;
         
-        if body_tag:
+        if sub_page_soup:
         
             #check each p tag found for words from the keyword list
-            for p in body_tag.section.findAll("p"):
+            for p in sub_page_soup.findAll("p"):
 
                 if p is not None and len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
 
@@ -37,35 +37,34 @@ def scrape_article(path, uReq, soup, keyword_list):
             #article is relevant, build a beef record
             if(relevant_story): #execute if a story contains a keyword
 
-                if body_tag.h2 and body_tag.h2.text:
-                    title = body_tag.h2.text.strip()
+                title_tag = sub_page_soup.find("h1")
+                
+                if title_tag and title_tag.text:
+                    title = title_tag.text.split("[")[0]
 
                 content_string = ""
 
-                for p in body_tag.section.findAll("p"):
+                for p in sub_page_soup.findAll("p"):
 
-                    if p is not None:
+                    if p is not None and (p.a == None or "bossip" in p.a["href"]) and "Bossip Newsletter" not in p.text and "WENN" not in p.text:
                         content_string += p.text
-
-                img_tag_array = sub_page_soup.findAll("img", { "class": "article-gallery-cover"})
-
+                
+                img_tag_array = sub_page_soup.findAll("img", {"class": ["size-large", "size-full"] })
+                
                 if len(img_tag_array) > 0 and img_tag_array[0]["src"]:
                     img_link = img_tag_array[0]["src"]
+                else:
+                    return None
+                date_string = sub_page_soup.find("time", {"class" : "date"})["datetime"]#find tags in the soup object
+                date_split = date_string.lstrip().split("-") #split to get month and day in slot [0] and year and rest of string in [1]
 
-                #relevant_story = None;
-
-                date_string = sub_page_soup.find("div", {"class" : "editorBlock-date"}).text.replace("\n", "") #find tags in the soup object
-                date_split = date_string.lstrip().split(", ") #split to get month and day in slot [0] and year and rest of string in [1]
-                secondary_date_split = date_split[0].split(" ") #split to seperate month and day
-                tertiary_date_split = date_split[1].split(" ") #split to seperate year from rest of string
-
-                final_date_string = str(secondary_date_split[1]) + "/" + str(globals.get_month_number(secondary_date_split[0])) + "/" + str(tertiary_date_split[0])
+                final_date_string = date_split[2].split(" ")[0] + "/" + date_split[1] + "/" + date_split[0]
 
                 actors_list = extract_names(content_string) #extract actors from content_string
                 highlights = extract_quotes(content_string) #extract quotes from content_string
                 categories = [1]
 
-                link_raw = body_tag.findAll("iframe")
+                link_raw = sub_page_soup.findAll("iframe")
                 link = ""
                 link_type = ""
                 media_link = {
