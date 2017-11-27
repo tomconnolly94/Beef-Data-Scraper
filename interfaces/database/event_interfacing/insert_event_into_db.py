@@ -69,9 +69,9 @@ def inspect_beef_event_for_broken_fields(beef_object):
                 record_broken_field("relevant_actors", beef_object_fields[5], "too_short", field)
             elif index == 2:
                 if len(field) < 100:
-                    record_broken_field("relevant_actors", beef_object_fields[5], "too_short", field)
+                    record_broken_field("content", beef_object_fields[5], "too_short", field)
                 elif len(field) > 1000:
-                    record_broken_field("relevant_actors", beef_object_fields[5], "too_long", field)
+                    record_broken_field("content", beef_object_fields[5], "too_long", field)
             elif index == 3:
                 if len(field.split("/")) != 3:
                     record_broken_field("date", beef_object_fields[5], "incorrect_format", field)
