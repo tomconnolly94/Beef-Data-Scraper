@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import time
 import datetime
-from interfaces.database.insert_into_db import insert_if_not_exist
-from interfaces.database.insert_into_db import insert
+from interfaces.database.db_interface import insert_if_not_exist
+from interfaces.database.db_interface import insert
 
 def insert_loop(beef_objects):
     

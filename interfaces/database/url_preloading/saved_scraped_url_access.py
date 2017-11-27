@@ -4,8 +4,8 @@ import sys
 from datetime import datetime
 #interface imports
 from interfaces.database.db_config import open_db_connection
-from interfaces.database.insert_into_db import insert_if_not_exist
-from interfaces.database.insert_into_db import get_objects_from_db_table
+from interfaces.database.db_interface import insert_if_not_exist
+from interfaces.database.db_interface import get_objects_from_db_table
 
 saved_urls = ()
 
