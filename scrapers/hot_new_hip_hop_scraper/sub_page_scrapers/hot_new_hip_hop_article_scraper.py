@@ -6,6 +6,8 @@ from interfaces.url_access.url_access import access_url
 from objects.beef_object import BeefObject
 from text_extraction.text_extraction_helper_functions import extract_names
 from text_extraction.text_extraction_helper_functions import extract_quotes
+from decision_logic.beef_object_filter import classify_event
+from interfaces.database.db_interface import insert_if_not_exist
 
 def scrape_article(path, uReq, soup, keyword_list):
     
@@ -21,8 +23,12 @@ def scrape_article(path, uReq, soup, keyword_list):
         
         if body_tag:
         
+            content_string = "" #init content string
+
             #check each p tag found for words from the keyword list
             for p in body_tag.section.findAll("p"):
+
+                content_string += p.text
 
                 if p is not None and len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
 
@@ -33,19 +39,14 @@ def scrape_article(path, uReq, soup, keyword_list):
 
                 else:
                     relevant_story = True
+            
+            title = body_tag.h2.text.strip() #find tags in the soup object for beef object title
+            
+            classification_result = classify_event(content_string)
+            insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
 
             #article is relevant, build a beef record
             if(relevant_story): #execute if a story contains a keyword
-
-                if body_tag.h2 and body_tag.h2.text:
-                    title = body_tag.h2.text.strip()
-
-                content_string = ""
-
-                for p in body_tag.section.findAll("p"):
-
-                    if p is not None:
-                        content_string += p.text
 
                 img_tag_array = sub_page_soup.findAll("img", { "class": "article-gallery-cover"})
 

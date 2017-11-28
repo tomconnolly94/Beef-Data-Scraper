@@ -21,7 +21,7 @@ def scrape_article(path, uReq, soup, keyword_list):
 
         relevant_story = None;
 
-        if(len(content_tag_array) > 0):
+        if len(content_tag_array) > 0:
             
             content_string = "" #init content string
 
@@ -39,14 +39,14 @@ def scrape_article(path, uReq, soup, keyword_list):
 
                 else:
                     relevant_story = True
-                    
-            classification_result = classify_event(content_string)
-            
+
             title = sub_page_soup.findAll("h1", {"class" : "story-body__h1"})[0].text #find tags in the soup object for beef object title
+            
+            classification_result = classify_event(content_string)
             insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
 
             #article is relevant, build a beef record
-            if(relevant_story): #execute if a story contains a keyword
+            if relevant_story: #execute if a story contains a keyword
 
                 mini_info_panel_tag_array = sub_page_soup.findAll("li", {"class" : "mini-info-list__item"})#find tags in the soup object for beef object date
                 date_string = mini_info_panel_tag_array[0].div["data-datetime"] #format date
@@ -115,5 +115,7 @@ def scrape_article(path, uReq, soup, keyword_list):
             
             else:
                 return None
+        else:
+            return None
     else:
         return None

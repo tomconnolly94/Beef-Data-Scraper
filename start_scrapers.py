@@ -51,7 +51,7 @@ while loop:
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
-    '''
+    
     print("Scraping BET...")
     insert_loop(scrape_bet_home(uReq, soup, broad_keyword_list))
     print("BET Scraped.")
@@ -79,7 +79,7 @@ while loop:
     print("Scraping Hot New Hip Hop...")
     insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, empty_keyword_list))
     print("Hot New Hip Hop Scraped")
-    '''
+    
     #initiate hold sequence to prevent over-scraping
     sleep_secs = 300 # 5 minutes
     

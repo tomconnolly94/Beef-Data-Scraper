@@ -19,10 +19,15 @@ def initialise_classification_module():
 
 def classify_event(event_text):
     global cl
-    classification = cl.classify(event_text)
+    try:
+        classification = cl.classify(event_text)
+    except ValueError:
+        print("value error")
+        classification = "definite_beef"
+        
     confirm = None
     
-    if classification == "definite_beef" or classification == "possible_beef" or classification == "unsure":
+    if classification == "definite_beef" or classification == "probable_beef" or classification == "unsure":
         confirm = True
     elif classification == "unlikely_beef" or classification == "not_beef":
         confirm = None

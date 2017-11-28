@@ -18,14 +18,11 @@ def scrape_bet_home(uReq, soup, keyword_list):
 
     raw_page_html = access_url(base_url, uReq)#make request for page
     
-    print(raw_page_html)
-    return None
-    
     if raw_page_html is not None:
         
         page_soup = soup(raw_page_html, "html.parser") #convert the html to a soup object
 
-        news_tag_array = page_soup.findAll("li", {"class", "endlessScrollCommon-list-item"})#, text=pattern) #find tags in the soup object
+        news_tag_array = page_soup.findAll("article", {"class", "article"})#, text=pattern) #find tags in the soup object
         
         beef_objects = []
             
@@ -42,7 +39,10 @@ def scrape_bet_home(uReq, soup, keyword_list):
 
                 if news_tag and news_tag.div and news_tag.div.a and news_tag.div.a["href"]:
                     
-                    sub_page_url = base_url + news_tag.div.a["href"]
+                    if "http" in news_tag.div.a["href"]:
+                        sub_page_url = news_tag.div.a["href"]
+                    else:
+                        sub_page_url = base_url + news_tag.div.a["href"]                            
 
                     if any(url_obj["url"] == sub_page_url for url_obj in saved_urls): #check through pre loaded urls to ensure url has not already been scraped
                         if logging:
