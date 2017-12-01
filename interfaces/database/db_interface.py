@@ -2,6 +2,7 @@
 import time
 import pymongo
 from datetime import datetime
+from calendar import monthrange
 from interfaces.database.db_config import open_db_connection
 
 def insert(formatted_object, table, db):
@@ -109,11 +110,27 @@ def remove_expired_events():
         else:
             if db:
                 
-                query_date = datetime(datetime.fromtimestamp(time.time()).year, 
-                                      datetime.fromtimestamp(time.time()).month, 
-                                      datetime.fromtimestamp(time.time()).day - 1, 
+                day_num = datetime.fromtimestamp(time.time()).day - 1
+                month_num = datetime.fromtimestamp(time.time()).month
+                year_num = datetime.fromtimestamp(time.time()).year
+                
+                if day_num == 0:
+                    month_num -= 1
+                    
+                    if month_num == 0:
+                        month_num = 12
+                        year_num -= 1
+                
+                num_of_days_in_month = monthrange(year_num, month_num)[1]
+                
+                if(day_num == 0):
+                    day_num = num_of_days_in_month
+                
+                query_date = datetime(year_num, 
+                                      month_num, 
+                                      day_num, 
                                       datetime.fromtimestamp(time.time()).hour, 
-                                      datetime.fromtimestamp(time.time()).minute)
+                                      datetime.fromtimestamp(time.time()).minute )
                 
                 db.scraped_url_store.remove({ "date_added" : { "$lt" : query_date } } )
                 db.broken_fields.remove({ "date_added" : { "$lt" : query_date } } )

@@ -49,7 +49,7 @@ def scrape_article(path, uReq, soup, keyword_list):
                 date_tag_array = sub_page_soup.findAll("p", {"class" : "update-time"}) #find tags in the soup object
 
                 split_date = date_tag_array[0].text.split(" ") #split the date string into parts
-                date_string = split_date[1] + " " + split_date[5] + " " + split_date[6] + " " + split_date[7] + " " #rebuild date string with only relevant parts
+                date_string = split_date[6].split(",")[0] + "/" + globals.get_month_number(split_date[5]) + "/" + split_date[7] #rebuild date string with only relevant parts
 
                 actors_list = extract_names(content_string) #extract actors from content_string
 

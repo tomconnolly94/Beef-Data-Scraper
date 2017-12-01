@@ -49,7 +49,8 @@ def scrape_article(path, uReq, soup, keyword_list):
             if relevant_story: #execute if a story contains a keyword
 
                 mini_info_panel_tag_array = sub_page_soup.findAll("li", {"class" : "mini-info-list__item"})#find tags in the soup object for beef object date
-                date_string = mini_info_panel_tag_array[0].div["data-datetime"] #format date
+                date_string_split = mini_info_panel_tag_array[0].div["data-datetime"].split(" ")#format date
+                date_string = date_string_split[0] + "/" + globals.get_month_number(date_string_split[1]) + "/" + date_string_split[2]
                 actors_list = extract_names(content_string) #extract actors from content_string
                 highlights = extract_quotes(content_string) #extract quotes from content_string
 

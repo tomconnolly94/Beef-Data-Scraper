@@ -80,10 +80,13 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                         
                         all_data[row.th.text] = row.td.text
                                                 
-                        if "birth name" in row.th.text.lower(): #get birth name
-                            birth_name = row.td.text
-                            
-                        elif "born" in row.th.text.lower(): # get birth date and origin
+                        if "birth name" in row.th.text.lower() or "full name" in row.th.text.lower(): #get birth name
+                            birth_name = row.td.text.split("[")
+                        
+                        elif "place of birth" in row.th.text.lower(): # get birth date and origin
+                            origin = row.td.text
+                        
+                        elif "born" in row.th.text.lower() or "date of birth" in row.th.text.lower(): # get birth date and origin
                             
                             name_dob_origin = row.td.text.split("\n")
 

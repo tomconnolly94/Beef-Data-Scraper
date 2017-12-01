@@ -11,6 +11,8 @@ from interfaces.database.db_interface import insert_if_not_exist
 
 def scrape_article(path, uReq, soup, keyword_list):
     
+    logging = True
+    
     sub_page_html = access_url(path, uReq)
         
     if sub_page_html is not None:
@@ -28,17 +30,17 @@ def scrape_article(path, uReq, soup, keyword_list):
             #check each p tag found for words from the keyword list
             for p in body_tag.findAll("p"):
 
-                if p is not None:
+                if p is not None and "Do YOU want to write for GiveMeSport?" not in p.text and "Have your say in the comments section below." not in p.text:
                     content_string += p.text
                     
-                if p is not None and len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
+                    if len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
 
-                    #check if any text from page contains key words stored in list, if keyword found, print page text
-                    if(any(keyword in p.text for keyword in keyword_list)):
+                        #check if any text from page contains key words stored in list, if keyword found, print page text
+                        if(any(keyword in p.text for keyword in keyword_list)):
+                            relevant_story = True
+
+                    else:
                         relevant_story = True
-
-                else:
-                    relevant_story = True
 
             title = sub_page_soup.find("h1", {"class" : "gms-article-title"}).text
                 
@@ -85,6 +87,9 @@ def scrape_article(path, uReq, soup, keyword_list):
                         "link": link,
                         "type": link_type 
                     }
+                    
+                if logging:
+                    print(content_string)
 
                 #frame = BeefObject( title, relevant_actors, content, date, highlights, data_source, categories, img_title)
                 beef_obj = BeefObject(title, actors_list, content_string, final_date_string, highlights, path, categories, img_link, media_link) #create beefObject 
