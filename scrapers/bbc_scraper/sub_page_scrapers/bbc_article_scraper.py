@@ -10,7 +10,7 @@ from decision_logic.beef_object_filter import classify_event
 from interfaces.database.db_interface import insert_if_not_exist
 
 def scrape_article(path, uReq, soup, keyword_list):
-    
+
     sub_page_html = access_url(path, uReq)
         
     if sub_page_html is not None:
@@ -50,23 +50,24 @@ def scrape_article(path, uReq, soup, keyword_list):
 
                 mini_info_panel_tag_array = sub_page_soup.findAll("li", {"class" : "mini-info-list__item"})#find tags in the soup object for beef object date
                 date_string_split = mini_info_panel_tag_array[0].div["data-datetime"].split(" ")#format date
-                date_string = date_string_split[0] + "/" + globals.get_month_number(date_string_split[1]) + "/" + date_string_split[2]
+                date_string = str(date_string_split[0]) + "/" + str(globals.get_month_number(date_string_split[1])) + "/" + str(date_string_split[2])
+                
                 actors_list = extract_names(content_string) #extract actors from content_string
                 highlights = extract_quotes(content_string) #extract quotes from content_string
 
                 categories = []
 
-                if len(mini_info_panel_tag_array) > 1:
+                if len(mini_info_panel_tag_array) > 1 and mini_info_panel_tag_array[1].a is not None and mini_info_panel_tag_array[1].a.text is not None:
 
                     category = mini_info_panel_tag_array[1].a.text
 
-                    if "Politics" in category:
+                    if "politics" in category.lower():
                         categories.append(2)
 
-                    if "sport" in category:
+                    if "sport" in category.lower():
                         categories.append(4)
 
-                    if "Technology" in category:
+                    if "technology" in category.lower():
                         categories.append(6)
 
                 img_tag_array = sub_page_soup.findAll("span", {"class" : "image-and-copyright-container"}) #find tags in the soup object

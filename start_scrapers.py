@@ -47,7 +47,7 @@ while loop:
     remove_expired_events()    
     
     #start scraping
-    '''
+    
     print("Scraping BBC...")
     insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
     print("BBC Scraped.")
@@ -63,11 +63,11 @@ while loop:
     print("Scraping CNN...")
     insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
     print("CNN Scraped.")
-    '''
+    
     print("Scraping Give me Sport...")
     insert_loop(scrape_give_me_sport_home(uReq, soup, empty_keyword_list))
     print("Give me Sport Scraped.")
-    '''
+    
     print("Scraping Hip Hop Beef...")
     insert_loop(scrape_hip_hop_beef_home(uReq, soup, empty_keyword_list))
     print("Hip Hop Beef Scraped")
@@ -79,7 +79,7 @@ while loop:
     print("Scraping Hot New Hip Hop...")
     insert_loop(scrape_hot_new_hip_hop_home(uReq, soup, empty_keyword_list))
     print("Hot New Hip Hop Scraped")
-    '''
+    
     #initiate hold sequence to prevent over-scraping
     sleep_secs = 300 # 5 minutes
     
