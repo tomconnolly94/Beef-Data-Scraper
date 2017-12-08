@@ -11,7 +11,7 @@ from interfaces.database.db_interface import insert_if_not_exist
 
 def scrape_article(path, uReq, soup, keyword_list):
     
-    logging = True
+    logging = None
     
     sub_page_html = access_url(path, uReq)
         

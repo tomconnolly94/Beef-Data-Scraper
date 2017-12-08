@@ -60,7 +60,7 @@ def scrape_article(path, uReq, soup, keyword_list):
                 secondary_date_split = date_split[0].split(" ") #split to seperate month and day
                 tertiary_date_split = date_split[1].split(" ") #split to seperate year from rest of string
 
-                final_date_string = str(secondary_date_split[1]) + "/" + str(globals.get_month_number(secondary_date_split[0])) + "/" + str(tertiary_date_split[0])
+                final_date_string = secondary_date_split[1] + "/" + str(globals.get_month_number(secondary_date_split[0])) + "/" + tertiary_date_split[0]
 
                 actors_list = extract_names(content_string) #extract actors from content_string
                 highlights = extract_quotes(content_string) #extract quotes from content_string

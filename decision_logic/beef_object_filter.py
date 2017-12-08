@@ -22,7 +22,7 @@ def classify_event(event_text):
     try:
         classification = cl.classify(event_text)
     except ValueError:
-        print("value error")
+        print("decision_logic/beef_object_filter.py: classification value error")
         classification = "definite_beef"
         
     confirm = None
