@@ -12,7 +12,7 @@ from scrapers.bossip_scraper.sub_page_scrapers.bossip_article_scraper import scr
 
 def scrape_bossip_home(uReq, soup, keyword_list):
     
-    logging = True
+    logging = None
     
     base_url = 'https://bossip.com' #url to scrape
     initial_suffix = "/category/bossip-category/hip-hop-beef"
