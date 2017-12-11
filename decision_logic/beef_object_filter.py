@@ -10,7 +10,9 @@ from interfaces.database.db_interface import get_objects_from_db_table
 def initialise_classification_module():
     #access all_scraped_events and create training set for text classifier
     db_data = get_objects_from_db_table("all_scraped_events_with_classifications", "", "")
-    training_set=[ ( obj["title"], obj["classification"] ) for obj in db_data]
+    training_set=[ ( obj["title"], obj["classification"] ) for obj in db_data ]
+    
+    print(len(training_set))
     
     global cl
     cl = NaiveBayesClassifier(training_set)
