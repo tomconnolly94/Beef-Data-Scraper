@@ -3,7 +3,8 @@
 #imports
 from textblob.classifiers import NaiveBayesClassifier
 from textblob import TextBlob
-
+from pprint import pprint
+    
 #import functions
 from interfaces.database.db_interface import get_objects_from_db_table
 
