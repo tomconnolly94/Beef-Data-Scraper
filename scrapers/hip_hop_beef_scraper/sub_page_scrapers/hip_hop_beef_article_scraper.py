@@ -44,6 +44,9 @@ def scrape_article(path, uReq, soup, keyword_list):
                 else:
                     relevant_story = True
 
+            #clean content string
+            scrub_content_text(content_string)
+
             title = sub_page_soup.findAll("div", {"class" : "page_header"})[0].h2.text #find tags in the soup object
             
             classification_result = classify_event(content_string)

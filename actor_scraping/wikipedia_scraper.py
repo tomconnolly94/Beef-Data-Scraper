@@ -91,7 +91,9 @@ def scrape_actor_from_wiki(uReq, soup, op_url):
                             name_dob_origin = row.td.text.split("\n")
 
                             if len(name_dob_origin) == 2:
-                                d_o_b = interpret_date(name_dob_origin[0])
+                                for entry in name_dob_origin: #find the list entry with numbers in it
+                                    if any(char.isdigit() for char in entry):
+                                        d_o_b = interpret_date(entry)
                                 all_data["Date of Birth"] = d_o_b
                                 origin = name_dob_origin[1]
                                 all_data["Origin"] = origin

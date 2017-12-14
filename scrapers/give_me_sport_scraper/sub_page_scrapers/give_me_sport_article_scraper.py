@@ -31,6 +31,7 @@ def scrape_article(path, uReq, soup, keyword_list):
             for p in body_tag.findAll("p"):
 
                 if p is not None and "Do YOU want to write for GiveMeSport?" not in p.text and "Have your say in the comments section below." not in p.text:
+                    
                     content_string += p.text
                     
                     if len(keyword_list) > 0: #if keyword list has values, use them to filter stories, if it is empty, automatically approve story
@@ -41,6 +42,9 @@ def scrape_article(path, uReq, soup, keyword_list):
 
                     else:
                         relevant_story = True
+
+            #clean content string
+            scrub_content_text(content_string)
 
             title = sub_page_soup.find("h1", {"class" : "gms-article-title"}).text
                 

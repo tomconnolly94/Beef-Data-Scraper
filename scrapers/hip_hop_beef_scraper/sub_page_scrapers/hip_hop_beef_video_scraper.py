@@ -26,7 +26,7 @@ def scrape_video(path, uReq, soup, keyword_list):
 
         media_tag_array = sub_page_soup.findAll("iframe") #find tags in the soup object
 
-        content_string = ""
+        content_string = title_tag_array[0].h1.text
         img_link = ""
 
         if len(title_tag_array) > 0 and title_tag_array[0] and title_tag_array[0].div and title_tag_array[0].div.img:
@@ -36,8 +36,8 @@ def scrape_video(path, uReq, soup, keyword_list):
 
         date_string = sub_page_soup.find("span", {"class" : "date"}).text.replace("Posted on: ", "") #find tags in the soup object
 
-        actors_list = extract_names(title_tag_array[0].h1.text) #extract actors from content_string
-        highlights = extract_quotes(title_tag_array[0].h1.text) #extract quotes from content_string
+        actors_list = extract_names(title_tag_array[0].h1.text) #extract actors from title
+        highlights = extract_quotes(title_tag_array[0].h1.text) #extract quotes from title
         categories = [1]
 
         media_link = {
