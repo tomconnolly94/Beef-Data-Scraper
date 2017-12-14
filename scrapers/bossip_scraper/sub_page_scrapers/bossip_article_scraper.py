@@ -40,6 +40,9 @@ def scrape_article(path, uReq, soup, keyword_list):
                 else:
                     relevant_story = True
 
+            #clean content string
+            globals.scrub_content_text(content_string)
+
             title_tag = sub_page_soup.find("h1")
             
             if title_tag and title_tag.text:

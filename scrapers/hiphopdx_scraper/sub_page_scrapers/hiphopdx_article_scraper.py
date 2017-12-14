@@ -40,7 +40,7 @@ def scrape_article(path, uReq, soup, keyword_list):
                     relevant_story = True
 
             #clean content string
-            scrub_content_text(content_string)
+            globals.scrub_content_text(content_string)
 
             title= ""
             header_tag = sub_page_soup.find("div", {"class" : "article-header"}) #find tags in the soup object

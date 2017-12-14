@@ -41,7 +41,7 @@ def scrape_article(path, uReq, soup, keyword_list):
                     relevant_story = True
 
             #clean content string
-            scrub_content_text(content_string)
+            globals.scrub_content_text(content_string)
                     
             title = sub_page_soup.findAll("h1", {"class" : "story-body__h1"})[0].text #find tags in the soup object for beef object title
             
