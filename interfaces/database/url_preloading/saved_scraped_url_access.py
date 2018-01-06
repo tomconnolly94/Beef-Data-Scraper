@@ -13,8 +13,8 @@ def save_url(source, url):
     
     document = ({
         "url" : url,
-        "source" : source, 
-        "event_date" : datetime.datetime.utcnow(),
+        "source" : source,
+        "date_added" : datetime.datetime.utcnow(),
     })
 
     insert_if_not_exist(document, "scraped_url_store")
@@ -27,7 +27,7 @@ def get_saved_urls(source):
     
 def get_all_saved_urls():
         
-    return get_objects_from_db_table("scraped_url_store", "source", source)
+    return get_objects_from_db_table("scraped_url_store", "source", "")
     
     
 def check_url_history(target, source):
