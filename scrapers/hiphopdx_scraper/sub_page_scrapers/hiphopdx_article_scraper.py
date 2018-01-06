@@ -48,12 +48,12 @@ def scrape_article(path, uReq, soup, keyword_list):
             if header_tag and header_tag.div and header_tag.div.h1 and header_tag.div.text:
                 title = header_tag.div.h1.text
                 
-            classification_result = classify_event(content_string)
-            insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
-
             #article is
             #article is relevant, build a beef record
             if(relevant_story): #execute if a story contains a keyword
+
+                classification_result = classify_event(content_string)
+                insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
 
                 header_divs = header_tag.findAll("div")
 

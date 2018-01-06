@@ -21,7 +21,6 @@ def format_and_insert_scraped_beef_event(beef_object):
         "relevant_actors" : beef_object.relevant_actors, 
         "description" : beef_object.content,
         "event_date" : beef_object.date,
-        "date_added" : datetime.datetime.utcnow(),
         "highlights" : beef_object.highlights,
         "data_source" : beef_object.data_source,
         "selected_categories" : beef_object.categories,

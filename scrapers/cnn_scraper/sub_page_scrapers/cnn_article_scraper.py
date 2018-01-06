@@ -43,12 +43,12 @@ def scrape_article(path, uReq, soup, keyword_list):
 
             title = sub_page_soup.findAll("h1", {"class" : "pg-headline"})[0].text #find tags in the soup object
             
-            classification_result = classify_event(content_string)
-            insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
-            
             #article is relevant, build a beef record
             if(relevant_story): #execute if a story contains a keyword
                 
+                classification_result = classify_event(content_string)
+                insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
+            
                 date_tag_array = sub_page_soup.findAll("p", {"class" : "update-time"}) #find tags in the soup object
 
                 split_date = date_tag_array[0].text.split(" ") #split the date string into parts

@@ -24,8 +24,12 @@ from decision_logic.beef_object_filter import initialise_classification_module
 globals.init() #initiate globals
 loop = True
 
+print("Training classification module...")
+
 #initialise the text classification script for use later on
 initialise_classification_module()
+
+print("Complete.")
 
 #define keyword lists for scrapers to use
 broad_keyword_list = ("beef", "conflict", "fight", "disagree", "rebuff", "counter-", "argument", "argue", "communications", "feud", "calls", "Hurricane")
@@ -35,6 +39,8 @@ empty_keyword_list = ()
 #scraper loop
 while loop:
     
+    print("Preparing...")
+    
     #loop through blacklist, decrease timeout counts and remove the paths with timeout counts at 0
     for path in list(globals.blacklisted_urls):
         
@@ -43,17 +49,16 @@ while loop:
         else:
             globals.blacklisted_urls[path] = globals.blacklisted_urls[path] - 1
         
-    #check on expired events
-    remove_expired_events()    
+    #check expired events, remove any unecessary data
+    remove_expired_events()
     
     #start scraping
-    
     print("Scraping BBC...")
-    insert_loop(scrape_bbc_home(uReq, soup, broad_keyword_list))
+    insert_loop(scrape_bbc_home(uReq, soup, empty_keyword_list))
     print("BBC Scraped.")
     
     print("Scraping BET...")
-    insert_loop(scrape_bet_home(uReq, soup, broad_keyword_list))
+    insert_loop(scrape_bet_home(uReq, soup, empty_keyword_list))
     print("BET Scraped.")
     
     print("Scraping Bossip...")
@@ -61,7 +66,7 @@ while loop:
     print("Bossip Scraped.")
     
     print("Scraping CNN...")
-    insert_loop(scrape_cnn_home(uReq, soup, cnn_keyword_list))
+    insert_loop(scrape_cnn_home(uReq, soup, empty_keyword_list))
     print("CNN Scraped.")
     
     print("Scraping Give me Sport...")
@@ -73,7 +78,7 @@ while loop:
     print("Hip Hop Beef Scraped")
     
     print("Scraping Hip Hop DX...")
-    insert_loop(scrape_hiphopdx_home(uReq, soup, broad_keyword_list))
+    insert_loop(scrape_hiphopdx_home(uReq, soup, empty_keyword_list))
     print("Hip Hop DX Scraped")
     
     print("Scraping Hot New Hip Hop...")

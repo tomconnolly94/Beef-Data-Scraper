@@ -50,8 +50,10 @@ def insert_if_not_exist(formatted_object, table):
         if db:
 
             if table == "scraped_training_events_dump_v0_1" or table == "all_scraped_events_with_classifications":
+                formatted_object["date_added"] = datetime.utcnow() #add date_added field to track how long this record has been in the database
                 current_objects = db[table].find({ "title" : formatted_object["title"] })
             elif table == "scraped_url_store":
+                formatted_object["date_added"] = datetime.utcnow() #add date_added field to track how long this record has been in the database
                 current_objects = db[table].find({ "url" : formatted_object["url"] })
             else:
                 current_objects = []
@@ -86,9 +88,10 @@ def get_objects_from_db_table(table, query_field, query_value):
                 if len(query_field) > 0 and len(query_value) > 0:
                     query_string = { query_field : query_value }
                     
-                    return list(db[table].find(query_string))
                 else:
-                    return list(db[table].find({}))
+                    query_string = {}
+                
+                return list(db[table].find(query_string))
 
 #create query to remove any saved scraped events that are more than a week old
 def remove_expired_events():
@@ -134,4 +137,15 @@ def remove_expired_events():
                 
                 db.scraped_url_store.remove({ "date_added" : { "$lt" : query_date } } )
                 db.broken_fields.remove({ "date_added" : { "$lt" : query_date } } )
+                
+                #keep only the most recent x amount of events
+                x = 500
+                records = list(db.all_scraped_events_with_classifications.find({ }).sort("date_added", -1))
+                
+                excess_count = len(records) - x #count how many records are excess to required amount
+                excess_records = records[:excess_count] #slice off the top excess_count events
+                excess_ids = [ record["_id"] for record in excess_records ] #extract _ids from the excess records into a new list
+                
+                db.all_scraped_events_with_classifications.remove({'_id': {'$in': excess_ids}}) #remove any records with _ids that match the 
+                
                 return None

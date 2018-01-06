@@ -45,11 +45,11 @@ def scrape_article(path, uReq, soup, keyword_list):
             
             title = body_tag.h2.text.strip() #find tags in the soup object for beef object title
             
-            classification_result = classify_event(content_string)
-            insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
-
             #article is relevant, build a beef record
             if(relevant_story): #execute if a story contains a keyword
+
+                classification_result = classify_event(content_string)
+                insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
 
                 img_tag_array = sub_page_soup.findAll("img", { "class": "article-gallery-cover"})
 
