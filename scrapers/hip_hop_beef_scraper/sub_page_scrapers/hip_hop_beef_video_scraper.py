@@ -6,8 +6,7 @@ from interfaces.url_access.url_access import access_url
 from objects.beef_object import BeefObject
 from text_extraction.extract_names import extract_names
 from text_extraction.extract_quotes import extract_quotes
-from decision_logic.beef_object_filter import classify_event
-from interfaces.database.db_interface import insert_if_not_exist
+from interfaces.database.event_interfacing.insert_event_into_db import store_event_classification
 
 def scrape_video(path, uReq, soup, keyword_list):
     
@@ -21,9 +20,8 @@ def scrape_video(path, uReq, soup, keyword_list):
         title_tag_array = sub_page_soup.findAll("div", {"class" : "page_header"}) #find tags in the soup object
         title = title_tag_array[0].h1.text
     
-        classification_result = classify_event(title)
-        insert_if_not_exist( { "title": title, "content": title, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
-
+        store_event_classification(title, content_string) #classify event and store the classification for later use
+                
         media_tag_array = sub_page_soup.findAll("iframe") #find tags in the soup object
 
         content_string = title_tag_array[0].h1.text

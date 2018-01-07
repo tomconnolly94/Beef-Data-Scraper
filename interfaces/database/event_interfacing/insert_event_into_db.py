@@ -3,6 +3,7 @@ import time
 import datetime
 from interfaces.database.db_interface import insert_if_not_exist
 from interfaces.database.db_interface import insert
+from decision_logic.beef_object_filter import classify_event
 
 def insert_loop(beef_objects):
     
@@ -90,3 +91,9 @@ def record_broken_field(field_name, source, mode, value):
     })
     
     insert(insert_object, "broken_fields", None)
+    
+def store_event_classification(title, content_string):
+    
+    classification_result = classify_event(content_string)
+    insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
+    

@@ -6,20 +6,27 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import globals #import globals file
 #interface imports
-from interfaces.database.event_interfacing.insert_event_into_db import insert_loop # import db insert function
+from interfaces.database.event_interfacing.insert_event_into_db import insert_loop #import db insert function
 from interfaces.database.db_interface import remove_expired_events
-from interfaces.database.url_preloading.saved_scraped_url_access import get_all_saved_urls # import preload url function
+from interfaces.database.url_preloading.saved_scraped_url_access import get_all_saved_urls #import preload url function
 #import home scraper functions
-from scrapers.bbc_scraper.bbc_home import scrape_bbc_home # import bbc home scraper
-from scrapers.bet_scraper.bet_home import scrape_bet_home # import bbc home scraper
-from scrapers.bossip_scraper.bossip_home import scrape_bossip_home # import bbc home scraper
-from scrapers.cnn_scraper.cnn_home import scrape_cnn_home # import cnn home scraper
-from scrapers.give_me_sport_scraper.give_me_sport_home import scrape_give_me_sport_home # import cnn home scraper
-from scrapers.hip_hop_beef_scraper.hip_hop_beef_home import scrape_hip_hop_beef_home # import hip hop beef home scraper
-from scrapers.hiphopdx_scraper.hiphopdx_home import scrape_hiphopdx_home # import hip hop dx home scraper
-from scrapers.hot_new_hip_hop_scraper.hot_new_hip_hop_home import scrape_hot_new_hip_hop_home # import hip hop dx home scraper
+from scrapers.bbc_scraper.bbc_home import scrape_bbc_home #import bbc home scraper
+from scrapers.bet_scraper.bet_home import scrape_bet_home #import bbc home scraper
+from scrapers.bossip_scraper.bossip_home import scrape_bossip_home #import bbc home scraper
+from scrapers.cnn_scraper.cnn_home import scrape_cnn_home #import cnn home scraper
+from scrapers.give_me_sport_scraper.give_me_sport_home import scrape_give_me_sport_home #import cnn home scraper
+from scrapers.hip_hop_beef_scraper.hip_hop_beef_home import scrape_hip_hop_beef_home #import hip hop beef home scraper
+from scrapers.hiphopdx_scraper.hiphopdx_home import scrape_hiphopdx_home #import hip hop dx home scraper
+from scrapers.hot_new_hip_hop_scraper.hot_new_hip_hop_home import scrape_hot_new_hip_hop_home #import hip hop dx home scraper
 #import classification init function
-from decision_logic.beef_object_filter import initialise_classification_module
+from decision_logic.beef_object_filter import initialise_classification_module #import classification module initialisation
+from dotenv import load_dotenv, find_dotenv #import environment variable handling functions
+
+#load environment variables
+load_dotenv(find_dotenv())
+
+import os
+print(os.environ['HELLO'])
 
 globals.init() #initiate globals
 loop = True

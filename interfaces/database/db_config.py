@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 import pymongo
+import os
 
 def open_db_connection():
-    MONGO_HOST = "ds141937.mlab.com"
-    MONGO_DB = "heroku_w63fjrg6"
-    MONGO_USER = "beeftracker_server"
-    MONGO_PASS = "6YdmYtA+dH7LHBg4+Dn0EyUPYSKsjxz5fmvVuxSmKbW/rGH8QH+96JiY33e0tBw7"
-    MONGO_PORT = 41937
+    
+    MONGO_HOST = os.environ['MONGO_HOST']
+    MONGO_DB = os.environ['MONGO_DB']
+    MONGO_USER = os.environ['MONGO_USER']
+    MONGO_PASS = os.environ['MONGO_PASS']
+    MONGO_PORT = os.environ['MONGO_PORT']
+    
+    os.environ['S3_KEY']
 
     db_connection = pymongo.MongoClient(MONGO_HOST, MONGO_PORT, connect=False) # server.local_bind_port is assigned local port
     

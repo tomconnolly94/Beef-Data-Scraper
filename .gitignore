@@ -1,10 +1,6 @@
 #ignore compiled python files
 +__pycache__/
-<<<<<<< HEAD
 *.pyc 
 package-lock.json
 +logs/
-=======
-*.pyc
-+logs/
->>>>>>> develop
+.env

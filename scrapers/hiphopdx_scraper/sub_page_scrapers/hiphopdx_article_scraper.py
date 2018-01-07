@@ -6,8 +6,7 @@ from interfaces.url_access.url_access import access_url
 from objects.beef_object import BeefObject
 from text_extraction.text_extraction_helper_functions import extract_names
 from text_extraction.text_extraction_helper_functions import extract_quotes
-from decision_logic.beef_object_filter import classify_event
-from interfaces.database.db_interface import insert_if_not_exist
+from interfaces.database.event_interfacing.insert_event_into_db import store_event_classification
 
 def scrape_article(path, uReq, soup, keyword_list):
     
@@ -52,9 +51,8 @@ def scrape_article(path, uReq, soup, keyword_list):
             #article is relevant, build a beef record
             if(relevant_story): #execute if a story contains a keyword
 
-                classification_result = classify_event(content_string)
-                insert_if_not_exist( { "title": title, "content": content_string, "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
-
+                store_event_classification(title, content_string) #classify event and store the classification for later use
+                
                 header_divs = header_tag.findAll("div")
 
                 img_link = ""
