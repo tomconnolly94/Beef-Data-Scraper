@@ -2,6 +2,7 @@
 #imports
 import sys
 import time
+import os
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import globals #import globals file
@@ -24,9 +25,6 @@ from dotenv import load_dotenv, find_dotenv #import environment variable handlin
 
 #load environment variables
 load_dotenv(find_dotenv())
-
-import os
-print(os.environ['HELLO'])
 
 globals.init() #initiate globals
 loop = True

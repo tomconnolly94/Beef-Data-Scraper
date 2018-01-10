@@ -20,7 +20,7 @@ def scrape_video(path, uReq, soup, keyword_list):
         title_tag_array = sub_page_soup.findAll("div", {"class" : "page_header"}) #find tags in the soup object
         title = title_tag_array[0].h1.text
     
-        store_event_classification(title, content_string) #classify event and store the classification for later use
+        store_event_classification(title, title) #classify event and store the classification for later use
                 
         media_tag_array = sub_page_soup.findAll("iframe") #find tags in the soup object
 
