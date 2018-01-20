@@ -4,6 +4,7 @@
 
 #ignore log files
 +logs/
+*.log
 
 #ignore environment variable files
 .env
@@ -11,3 +12,4 @@
 #files only necessary for local dev
 count_lines_of_code.sh
 dump.html
+run_scrapers.*
