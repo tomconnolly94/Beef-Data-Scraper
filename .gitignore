@@ -1,10 +1,13 @@
 #ignore compiled python files
 +__pycache__/
-<<<<<<< HEAD
 *.pyc 
-package-lock.json
+
+#ignore log files
 +logs/
-=======
-*.pyc
-+logs/
->>>>>>> develop
+
+#ignore environment variable files
+.env
+
+#files only necessary for local dev
+count_lines_of_code.sh
+dump.html

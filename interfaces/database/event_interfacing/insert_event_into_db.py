@@ -3,6 +3,8 @@ import time
 import datetime
 from interfaces.database.db_interface import insert_if_not_exist
 from interfaces.database.db_interface import insert
+from decision_logic.beef_object_filter import classify_event
+from decision_logic.paraphrasing import paraphrase
 
 def insert_loop(beef_objects):
     
@@ -20,8 +22,8 @@ def format_and_insert_scraped_beef_event(beef_object):
         "title" : beef_object.title,
         "relevant_actors" : beef_object.relevant_actors, 
         "description" : beef_object.content,
+        "paraphrased_description" : paraphrase(beef_object.content),
         "event_date" : beef_object.date,
-        "date_added" : datetime.datetime.utcnow(),
         "highlights" : beef_object.highlights,
         "data_source" : beef_object.data_source,
         "selected_categories" : beef_object.categories,
@@ -91,3 +93,9 @@ def record_broken_field(field_name, source, mode, value):
     })
     
     insert(insert_object, "broken_fields", None)
+    
+def store_event_classification(title, content_string):
+    
+    classification_result = classify_event(content_string)
+    insert_if_not_exist( { "title": title, "content": content_string[:500], "classification": classification_result["classification"] }, "all_scraped_events_with_classifications")
+    

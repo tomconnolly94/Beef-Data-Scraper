@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #imports
 import sys
-from datetime import datetime
+import datetime  
 #interface imports
 from interfaces.database.db_config import open_db_connection
 from interfaces.database.db_interface import insert_if_not_exist
@@ -13,8 +13,8 @@ def save_url(source, url):
     
     document = ({
         "url" : url,
-        "source" : source, 
-        "date_added" : datetime.utcnow(),
+        "source" : source,
+        "date_added" : datetime.datetime.utcnow(),
     })
 
     insert_if_not_exist(document, "scraped_url_store")
