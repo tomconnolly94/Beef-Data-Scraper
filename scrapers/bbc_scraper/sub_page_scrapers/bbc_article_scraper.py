@@ -47,7 +47,7 @@ def scrape_article(path, uReq, soup, keyword_list):
             #article is relevant, build a beef record
             if relevant_story: #execute if a story contains a keyword
                 
-                store_event_classification(title, content_string) #classify event and store the classification for later use
+                #store_event_classification(title, content_string) #classify event and store the classification for later use
                 
                 mini_info_panel_tag_array = sub_page_soup.findAll("li", {"class" : "mini-info-list__item"})#find tags in the soup object for beef object date
                 date_string_split = mini_info_panel_tag_array[0].div["data-datetime"].split(" ")#format date

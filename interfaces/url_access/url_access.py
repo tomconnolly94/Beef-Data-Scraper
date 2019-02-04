@@ -1,6 +1,7 @@
 #imports
 import urllib.request as urllib_req
 import urllib
+import ssl
 import globals
 
 def access_url(path, uReq):
@@ -20,9 +21,11 @@ def access_url(path, uReq):
             req = urllib_req.Request(path, headers=hdr)
             page_html = uReq(req).read() #request url
             
-        except urllib.error.URLError: #handle any access errors, sometimes caused by too many requests to a domain
+        except (urllib.error.URLError, ssl.CertificateError) as e: #handle any access errors, sometimes caused by too many requests to a domain
 
-            print("URLError thrown. Adding " + path + " to blacklist.")
+            print("Error thrown. Adding " + path + " to blacklist.")
+            print("Error details: ")
+            print(e)
             globals.blacklisted_urls[path] = 5 #add path to dictionary and wait 20 loops before requesting it again
             return None
 

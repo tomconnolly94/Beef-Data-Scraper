@@ -22,7 +22,12 @@ def label_words(sentence):
                 words_with_tokenised_punctuation.append(token)
         else:
             words_with_tokenised_punctuation.append(word)
-
+    
+    #eremove any empty strings
+    for index, word in enumerate(words):
+        if(len(word) == 0): 
+            words.remove(index)
+    
     words = pos_tag(words) #label each word in array with it word type tag 
     
     return words
