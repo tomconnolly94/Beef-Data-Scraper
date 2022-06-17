@@ -7,7 +7,7 @@ beautifulsoup4==4.6.0
 demjson==2.2.4
 nltk==3.2.4
 six==1.10.0
-numpy==1.13.1
+numpy==1.21.0
 pymongo==3.6.1
 textblob==0.15.0
 python-dotenv
